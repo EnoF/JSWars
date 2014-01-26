@@ -1,0 +1,8 @@
+.idea
+*.iml
+bower_components
+node_modules
+/coverage
+/coverageE2E
+.tmp
+dist

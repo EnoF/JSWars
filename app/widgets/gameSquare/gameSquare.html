@@ -1,0 +1,22 @@
+<section class="game-square">
+    <div data-character="getCharacter()"
+         data-ng-if="isOccupied()">
+    </div>
+    <ul class="action-menu"
+        data-ng-click="stopPropagation($event)"
+        data-ng-show="isOpened() && !isSelectingAttack()">
+        <li data-ng-repeat="action in getActionList()"
+            data-ng-click="resolveAction(action)">{{ action }}
+        </li>
+        <li data-ng-click="resolveAction('cancel')">cancel</li>
+    </ul>
+    <ul class="attack-list"
+        data-ng-show="isSelectingAttack()"
+        data-ng-click="stopPropagation($event)">
+        <li data-ng-repeat="attack in getAttackList()"
+            data-ng-click="selectSkill($index)">
+            {{ attack.getName() }}
+        </li>
+        <li data-ng-click="resolveAction('cancel')">cancel</li>
+    </ul>
+</section>
