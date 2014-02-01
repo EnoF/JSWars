@@ -1,10 +1,5 @@
 // Generated on 2014-01-22 using generator-backular 0.0.0
 'use strict';
-var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
-var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
-};
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -16,6 +11,11 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
+    var LIVERELOAD_PORT = 35729;
+    var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
+    var mountFolder = function (connect, dir) {
+        return connect.static(require('path').resolve(dir));
+    };
     // configurable paths
     var yeomanConfig = {
         app: 'app',
@@ -352,21 +352,31 @@ module.exports = function (grunt) {
         },
         ngmin: {
             dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= yeoman.dist %>/scripts',
-                        src: '*.js',
-                        dest: '<%= yeoman.dist %>/scripts'
-                    }
-                ]
+//                files: [
+//                    {
+//                        expand: true,
+//                        cwd: '<%= yeoman.dist %>/scripts',
+//                        src: '*.js',
+//                        dest: '<%= yeoman.dist %>/scripts'
+//                    }
+//                ]
+                files: {
+                    '<%= yeoman.dist %>/scripts/scripts.js': [
+                        '<%= yeoman.dist %>/scripts/*.js',
+                        '<%= yeoman.dist %>/widgets/**/*.js',
+                        '<%= yeoman.dist %>/models/*.js',
+                        '<%= yeoman.dist %>/models/**/*.js'
+                    ]
+                }
             }
         },
         uglify: {
             dist: {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
-                        '<%= yeoman.dist %>/**/*.js'
+                        '<%= yeoman.dist %>/scripts/*.js',
+                        '<%= yeoman.dist %>/widgets/*.js',
+                        '<%= yeoman.dist %>/models/*.js'
                     ]
                 }
             }
@@ -404,6 +414,8 @@ module.exports = function (grunt) {
         'install-dependencies',
         'bower:install'
     ]);
+
+    grunt.registerTask('heroku:production', ['install', 'build']);
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
@@ -445,7 +457,7 @@ module.exports = function (grunt) {
         'copy:dist',
         'cdnify',
         'ngmin',
-        'uglify',
+//        'uglify',
         'rev',
         'string-replace',
         'usemin'
