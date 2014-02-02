@@ -11,6 +11,10 @@
     app.factory('GameObject', function GameObjectFactory() {
         return clazz(function GameObject() {
 
+            this.private = {
+                isActive: true
+            };
+
             this.protected = {
                 hp: 0,
                 maxHp: 0,
@@ -60,6 +64,12 @@
                 },
                 getMoves: function getMoves() {
                     return this.protected.moves;
+                },
+                isActive: function isActive() {
+                    return this.private.isActive;
+                },
+                setActive: function setActive(active) {
+                    this.private.isActive = active;
                 }
             };
 

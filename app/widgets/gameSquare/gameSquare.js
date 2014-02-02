@@ -28,6 +28,10 @@
 
             $scope.selectSkill = square.selectSkill;
 
+            $scope.hasAttacked = square.hasAttacked;
+
+            $scope.shouldDisable = square.shouldDisable;
+
             $scope.stopPropagation = function stopPropagation($event) {
                 $event.cancelBubble = true;
             };

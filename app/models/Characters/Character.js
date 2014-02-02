@@ -15,6 +15,10 @@
 
             this.private = {
                 boardImage: null,
+                hasAttackedInThisTurn: false,
+                hasMovedInThisTurn: false,
+                lastAppliedDmg: 0,
+                notify: null
             };
 
             this.protected = {
@@ -27,6 +31,18 @@
                 applyDmg: function applyDmg(dmg) {
                     var hp = this.public.getHp() - dmg;
                     this.public.setHp(hp);
+                    this.private.lastAppliedDmg = dmg;
+                    setTimeout(this.public.resetLastAppliedDmg, 1500);
+                },
+                getLastAppliedDmg: function getLastAppliedDmg() {
+                    return this.private.lastAppliedDmg;
+                },
+                resetLastAppliedDmg: function resetLastAppliedDmg() {
+                    this.private.lastAppliedDmg = 0;
+                    this.private.notify();
+                },
+                setNotify: function setNotify(notify) {
+                    this.private.notify = notify;
                 },
                 getAttack: function getAttack() {
                     return this.protected.attack;
@@ -45,6 +61,18 @@
                 },
                 canMove: function canMove() {
                     return true;
+                },
+                hasAttacked: function hasAttacked() {
+                    return this.private.hasAttackedInThisTurn;
+                },
+                setHasAttacked: function setHasAttacked(hasAttacked) {
+                    this.private.hasAttackedInThisTurn = hasAttacked;
+                },
+                hasMoved: function hasMoved() {
+                    return this.private.hasMovedInThisTurn;
+                },
+                setHasMoved: function setHasMoved(hasMoved) {
+                    this.private.hasMovedInThisTurn = hasMoved;
                 }
             };
 

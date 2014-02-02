@@ -11,13 +11,15 @@
         var GameSquareModel;
         var GameObjectModel;
         var SaberModel;
+        var CharacterModel;
 
         beforeEach(module('jsWars'));
 
-        beforeEach(inject(function injection(GameObject, GameSquare, Saber) {
+        beforeEach(inject(function injection(GameObject, GameSquare, Saber, Character) {
             GameSquareModel = GameSquare;
             GameObjectModel = GameObject;
             SaberModel = Saber;
+            CharacterModel = Character;
         }));
 
         whereIt('should be able to create a game square', function createGameSquare(getGameObject, isOccupied) {
@@ -127,9 +129,37 @@
         });
 
         it('should return an empty list when no moves are available', function noMoves() {
-            var square = new GameSquareModel(0, 0, new GameObjectModel());
+            var square = new GameSquareModel(0, 0, new CharacterModel());
             square.startSelectingAttack();
+            expect(square.isSelectingAttack()).toEqual(true);
             expect(square.getAttackList()).toEqual([]);
         });
+
+        it('should return false when no character is on the square', function noCharacter() {
+            var square = new GameSquareModel();
+            expect(square.hasAttacked()).toEqual(false);
+            expect(square.hasMoved()).toEqual(false);
+        });
+
+        whereIt('should disable the options when the character has already used it',
+            function disable(action, result) {
+                var square = new GameSquareModel(0, 0, new CharacterModel());
+                square.getGameObject().setHasAttacked(true);
+                square.getGameObject().setHasMoved(true);
+                expect(square.shouldDisable(action)).toEqual(result);
+            }, [
+                {
+                    action: 'attack',
+                    result: true
+                },
+                {
+                    action: 'move',
+                    result: true
+                },
+                {
+                    action: 'cancel',
+                    result: false
+                }
+            ]);
     });
 }(window.whereIt));
