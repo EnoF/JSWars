@@ -23,9 +23,14 @@
                     var targets = [];
                     var character = map[x][y].getGameObject();
                     if (character !== null) {
-                        targets.push(character);
+                        targets.push(map[x][y]);
                     }
                     return targets;
+                },
+                removeTarget: function removeTarget(target) {
+                    setTimeout(function removeTarget() {
+                        target.setGameObject(null);
+                    }, 500);
                 }
             };
 
@@ -40,9 +45,13 @@
                 inflictDmg: function inflictDmg(character, map, x, y) {
                     var targets = this.protected.searchTargets(map, x, y);
                     for (var targetIndex = 0; targetIndex < targets.length; targetIndex++) {
-                        var target = targets[targetIndex];
+                        var targetSquare = targets[targetIndex];
+                        var target = targetSquare.getGameObject();
                         var dmg = this.public.calcDmg(character, target);
                         target.applyDmg(dmg);
+                        if (target.getHp() === 0) {
+                            this.protected.removeTarget(targetSquare);
+                        }
                     }
                 },
                 getName: function getName() {

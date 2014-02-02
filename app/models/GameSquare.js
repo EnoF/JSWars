@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.factory('GameSquare', function GameSquareFactory() {
+    app.factory('GameSquare', function GameSquareFactory(Character) {
         return clazz(function GameSquare() {
 
             this.private = {
@@ -22,7 +22,9 @@
                 selectedSkill: null,
                 getActionList: function getActionList() {
                     var list = [];
-                    if (this.private.gameObject === null || !this.private.isOpened) {
+                    if (this.private.gameObject === null || !this.private.isOpened || !this.
+                        private.gameObject.isActive()) {
+
                         return list;
                     }
                     if (this.private.gameObject.canMove()) {
@@ -36,7 +38,7 @@
                 getAttackList: function getAttackList() {
                     var list = [];
                     var gameObject = this.private.gameObject;
-                    if (gameObject === null || !this.private.isSelectingAttack) {
+                    if (!this.private.isSelectingAttack) {
                         return list;
                     }
                     if (gameObject.hasMoves()) {
@@ -65,6 +67,20 @@
                 isOpened: function isOpened() {
                     return this.private.isOpened;
                 },
+                hasAttacked: function hasAttacked() {
+                    var gameObject = this.private.gameObject;
+                    if (gameObject instanceof Character) {
+                        return gameObject.hasAttacked();
+                    }
+                    return false;
+                },
+                hasMoved: function hasMoved() {
+                    var gameObject = this.private.gameObject;
+                    if (gameObject instanceof  Character) {
+                        return gameObject.hasMoved();
+                    }
+                    return false;
+                },
                 isSelectingAttack: function isSelectingAttack() {
                     return this.private.isSelectingAttack;
                 },
@@ -85,7 +101,12 @@
                     this.public.stopSelectingAttack();
                 },
                 startMoveMode: function startMoveMode() {
-                    this.private.inMoveMode = true;
+                    var gameObject = this.private.gameObject;
+                    if (gameObject instanceof Character && !gameObject.hasMoved()) {
+                        this.private.inMoveMode = true;
+                    } else {
+                        this.private.inMoveMode = false;
+                    }
                 },
                 stopMoveMode: function stopMoveMode() {
                     this.private.inMoveMode = false;
@@ -97,7 +118,12 @@
                     this.private.inAttackMode = false;
                 },
                 startSelectingAttack: function startSelectingAttack() {
-                    this.private.isSelectingAttack = true;
+                    var gameObject = this.private.gameObject;
+                    if (gameObject instanceof Character && !gameObject.hasAttacked()) {
+                        this.private.isSelectingAttack = true;
+                    } else {
+                        this.private.isSelectingAttack = false;
+                    }
                 },
                 stopSelectingAttack: function stopSelectingAttack() {
                     this.private.isSelectingAttack = false;
@@ -124,6 +150,14 @@
                     } else {
                         this.public.closeActionPanel();
                     }
+                },
+                shouldDisable: function shouldDisable(action) {
+                    if (action === 'attack') {
+                        return this.public.hasAttacked();
+                    } else if (action === 'move') {
+                        return this.public.hasMoved();
+                    }
+                    return false;
                 }
             };
 

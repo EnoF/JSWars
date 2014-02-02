@@ -3,7 +3,7 @@
  *
  * @author Andy Tang
  */
-(function SceneModel(angular, clazz, undefined) {
+(function SceneModel(angular, clazz, LinkedHashMap, undefined) {
     'use strict';
 
     var app = angular.module('jsWars');
@@ -14,6 +14,8 @@
             this.private = {
                 activeGameSquare: null,
                 map: [],
+                players: new LinkedHashMap(),
+                currentPlayerNode: null,
                 initializeMapCollumn: function initializeMapCollumn(column, amountOfSquares) {
                     this.private.map.push(this.private.initializeMapRow(column, amountOfSquares));
                 },
@@ -39,7 +41,22 @@
                     var skill = square.getSelectedSkill();
                     var character = square.getGameObject();
                     skill.inflictDmg(character, this.private.map, x, y);
+                    character.setHasAttacked(true);
                     this.public.closeActionPanel();
+                },
+                endTurn: function endTurn(player) {
+                    var units = player.getUnits();
+                    for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
+                        unit.getValue().setActive(false);
+                    }
+                },
+                startTurn: function startTurn(player) {
+                    var units = player.getUnits();
+                    for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
+                        unit.getValue().setHasAttacked(false);
+                        unit.getValue().setHasMoved(false);
+                        unit.getValue().setActive(true);
+                    }
                 },
                 initializeMap: function initializeMap(width, height) {
                     for (var column = 0; column < width; column++) {
@@ -74,13 +91,21 @@
                     this.private.activeGameSquare = gameSquare;
                     gameSquare.openActionPanel();
                     return true;
+                },
+                setCurrentPlayer: function setCurrentPlayer(playerNode) {
+                    this.private.currentPlayerNode = playerNode;
+                },
+                setAllCharacterStates: function setAllCharacterStates(list, active) {
+                    for (var node = list.getFirst(); node; node = node.getNext()) {
+                        node.getValue().setActive(active);
+                    }
                 }
             };
 
             this.public = {
                 action: function action(x, y) {
                     var square = this.private.activeGameSquare;
-                    if (square === null ||
+                    if (!this.public.hasActionPanelOpen() ||
                         (square.getX() === x && square.getY() === y)) {
                         this.public.openActionPanel(x, y);
                     } else if (this.public.isInMoveMode() &&
@@ -93,11 +118,28 @@
                         this.public.closeActionPanel();
                     }
                 },
+                endTurn: function endTurn() {
+                    var currentPlayerNode = this.private.currentPlayerNode;
+                    var nextPlayer = currentPlayerNode.getNext();
+                    this.protected.endTurn(currentPlayerNode.getValue());
+                    if (nextPlayer === null) {
+                        this.private.currentPlayerNode = this.private.players.getFirst();
+                    } else {
+                        this.private.currentPlayerNode = nextPlayer;
+                    }
+                    this.protected.startTurn(this.private.currentPlayerNode.getValue());
+                },
                 getActiveGameSquare: function getActiveGameSquare() {
                     return this.private.activeGameSquare;
                 },
+                getCurrentPlayer: function getCurrentPlayer() {
+                    return this.private.currentPlayerNode.getValue();
+                },
                 getMap: function getMap() {
                     return this.private.map;
+                },
+                getPlayers: function getPlayers() {
+                    return this.private.players;
                 },
                 getPosition: function getPosition(x, y) {
                     if (this.private.map[x] === undefined) {
@@ -150,6 +192,12 @@
                     }
                     return this.private.activeGameSquare.isInAttackMode();
                 },
+                hasActionPanelOpen: function hasActionPanelOpen() {
+                    if (this.private.activeGameSquare === null) {
+                        return false;
+                    }
+                    return this.private.activeGameSquare.isOpened();
+                },
                 move: function move(newX, newY) {
                     var currentPosition = this.private.activeGameSquare;
                     var newPosition = this.public.getPosition(newX, newY);
@@ -158,6 +206,7 @@
                         currentPosition.setGameObject(null);
                         newPosition.setGameObject(character);
                     }
+                    character.setHasMoved(true);
                     this.public.closeActionPanel();
                 }
             };
@@ -167,4 +216,4 @@
             };
         });
     });
-}(window.angular, window.clazz));
+}(window.angular, window.clazz, window.LinkedHashMap));

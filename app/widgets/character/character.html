@@ -1,3 +1,8 @@
 <div class="character {{getBoardImage}}">
+    <div class="hp-bar"><span style="width: {{ getHpPercentage()}}%;"></span></div>
+    <div class="dmg"
+         data-ng-class="{ 'hide' : getLastAppliedDmg() > 0 }"
+         data-ng-show="getLastAppliedDmg() > 0">
+        {{ getLastAppliedDmg() }}
+    </div>
 </div>
-<div class="hp-bar"><span style="width: {{ getHpPercentage()}}%;"></span></div>

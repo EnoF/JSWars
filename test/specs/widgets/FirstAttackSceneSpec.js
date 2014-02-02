@@ -20,6 +20,7 @@
                 scope = directive.children().scope();
                 GameSquareModel = GameSquare;
                 SaberModel = Saber;
+                jasmine.Clock.useMock();
             }));
 
         it('should load the map [10 by 5]', function loadCache() {
@@ -31,17 +32,25 @@
             expect(scope.map[3][2].getGameObject() !== null).toEqual(true);
         });
 
-        whereIt('should start the correct mode', function actionSelected(action, mode) {
-            var squareScope = scope.$$childHead.$$childHead.$$childHead;
-            scope.action(0, 0);
-            squareScope.resolveAction(action, {});
-            expect(scope[mode]()).toEqual(true);
-        }, [
-            {
-                action: 'move',
-                mode: 'isInMoveMode'
-            }
-        ]);
+        it('should show the damage', function showDmg() {
+            whenAttackingTheEnemyWithExcalibur();
+            expectEnemyDmg();
+        });
 
+        function whenAttackingTheEnemyWithExcalibur() {
+            var square = scope.map[3][2];
+            scope.action(3, 2);
+            square.startSelectingAttack();
+            square.selectSkill(1);
+            scope.action(5, 2);
+
+        }
+
+        function expectEnemyDmg() {
+            var enemy = scope.map[5][2].getGameObject();
+            expect(enemy.getLastAppliedDmg()).toEqual(320);
+            jasmine.Clock.tick(1500);
+            expect(enemy.getLastAppliedDmg()).toEqual(0);
+        }
     });
 }(window.whereIt));

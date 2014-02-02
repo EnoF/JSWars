@@ -6,7 +6,8 @@
         data-ng-click="stopPropagation($event)"
         data-ng-show="isOpened() && !isSelectingAttack()">
         <li data-ng-repeat="action in getActionList()"
-            data-ng-click="resolveAction(action)">{{ action }}
+            data-ng-click="resolveAction(action)"
+            data-ng-class="{ 'disabled': shouldDisable(action) }">{{ action }}
         </li>
         <li data-ng-click="resolveAction('cancel')">cancel</li>
     </ul>

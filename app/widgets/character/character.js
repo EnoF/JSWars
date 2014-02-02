@@ -14,6 +14,15 @@
         $scope.getHpPercentage = $scope.character.getHpPercentage;
 
         $scope.getBoardImage = $scope.character.getBoardImage();
+
+        $scope.getLastAppliedDmg = $scope.character.getLastAppliedDmg;
+
+        function hideDmg() {
+            $scope.$apply();
+        }
+
+        $scope.character.setNotify(hideDmg);
+
     });
 
     app.directive('character', function characterDirective() {

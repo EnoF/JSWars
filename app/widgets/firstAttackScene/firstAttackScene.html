@@ -1,6 +1,9 @@
 <section>
+
     <div class="game-board"
          data-ng-class="{ 'move-mode': isInMoveMode(), 'attack-mode': isInAttackMode()}">
+        <h2>{{ getCurrentPlayer().getName() }}</h2>
+
         <div class="column"
              data-ng-repeat="column in map">
             <div data-ng-repeat="square in column">
@@ -12,5 +15,8 @@
                      data-ng-click="action($parent.$index, $index)"/>
             </div>
         </div>
+    </div>
+    <div class="button"
+         data-ng-click="endTurn()">End Turn
     </div>
 </section>
