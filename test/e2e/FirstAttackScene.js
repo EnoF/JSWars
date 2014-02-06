@@ -8,7 +8,7 @@
     describe('First Attack Scene Scenarios', function FirstAttackScene() {
 
         beforeEach(function () {
-            browser().navigateTo('/');
+            browser().navigateTo('/#/tutorial');
         });
 
         it('should have one saber and one sword soldier', function oneCharacter() {
@@ -21,7 +21,6 @@
         });
 
         it('should show a menu when clicking on a character', function actionMenu() {
-            expect(element('.game-square:has(.saber)').count()).toEqual(1);
             clickOnSaber();
             expect(element('.game-square:has(.saber) .action-menu li').count()).toEqual(3);
             var text = element('.game-square:has(.saber) li').text();

@@ -5,7 +5,10 @@
         .config(function ($routeProvider) {
             $routeProvider
                 .when('/', {
-                    templateUrl: 'pages/main.html'
+                    templateUrl: 'pages/startmenu.html'
+                })
+                .when('/tutorial', {
+                    templateUrl: 'pages/tutorial.html'
                 })
                 .otherwise({
                     redirectTo: '/'

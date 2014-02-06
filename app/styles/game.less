@@ -34,11 +34,12 @@ body {
   -o-background-size: cover;
   background-size: cover;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  .prevent-selection();
 }
 
 h1 {
   .borderRadius(12px);
-  background: rgba(150, 150, 150, 0.5);
+  background: rgba(150, 150, 150, 0.8);
   padding: 20px;
   margin: 30px 30px;
   font-size: 24px;
@@ -51,6 +52,31 @@ h2 {
   font-size: 20px;
   font-weight: bold;
   color: @mainColor;
+}
+
+nav {
+  .borderRadius(12px);
+  overflow: hidden;
+  background: rgba(150, 150, 150, 0.8);
+  margin: 30px;
+
+  a:link,
+  a:visited {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #36363b;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 30px 15px 30px;
+
+    &:hover {
+      background: rgba(50, 50, 50, 0.8);
+      color: #fff;
+    }
+  }
 }
 
 .game-board {
