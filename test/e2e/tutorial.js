@@ -4,7 +4,7 @@
  * @author Andy Tang
  */
 (function FirstAttackSceneScenarios(whereIt) {
-
+    'use strict';
     describe('First Attack Scene Scenarios', function FirstAttackScene() {
 
         beforeEach(function () {

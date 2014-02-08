@@ -3,14 +3,14 @@
  *
  * @author Andy Tang
  */
-(function firstAttackSceneWidget(angular) {
+(function gameBoardWidget(angular) {
     'use strict';
 
     var app = angular.module('jsWars');
 
-    app.controller('firstAttackSceneViewModel',
-        function firstAttackSceneViewModel($scope, FirstAttackScene) {
-            var scene = new FirstAttackScene(3, 2, 5, 2);
+    app.controller('gameBoardViewModel',
+        function gameBoardViewModel($scope) {
+            var scene = $scope.scene;
 
             $scope.getCurrentPlayer = scene.getCurrentPlayer;
 
@@ -27,13 +27,14 @@
             $scope.endTurn = scene.endTurn;
         });
 
-    app.directive('firstAttackScene', function firstAttackSceneDirective() {
+    app.directive('gameBoard', function gameBoardDirective() {
         return {
             restrict: 'A',
-            templateUrl: 'firstAttackScene',
+            templateUrl: 'gameBoard',
             scope: {
+                scene: '=gameBoard'
             },
-            controller: 'firstAttackSceneViewModel'
+            controller: 'gameBoardViewModel'
         };
     });
 
