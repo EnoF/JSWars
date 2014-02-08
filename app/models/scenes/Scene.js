@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.factory('Scene', function SceneFactory(GameSquare) {
+    app.factory('Scene', function SceneFactory(GameSquare, Player) {
         return clazz(function Scene() {
 
             this.private = {
@@ -44,6 +44,9 @@
                     character.setHasAttacked(true);
                     this.public.closeActionPanel();
                 },
+                addUnits: function addUnits() {
+                    throw new Error('Exception not implemented');
+                },
                 endTurn: function endTurn(player) {
                     var units = player.getUnits();
                     for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
@@ -62,6 +65,12 @@
                     for (var column = 0; column < width; column++) {
                         this.private.initializeMapCollumn(column, height);
                     }
+                },
+                initializePlayers: function initializePlayers() {
+                    this.private.players.add(0, new Player('Player 1'));
+                    this.private.players.add(1, new Player('Player 2'));
+                    this.private.currentPlayerNode = this.private.players.getFirst();
+                    this.protected.addUnits();
                 },
                 validatePositions: function validatePositions(newX, newY) {
                     var currentPosition = this.private.activeGameSquare;

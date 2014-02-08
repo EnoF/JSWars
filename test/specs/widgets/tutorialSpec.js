@@ -14,16 +14,16 @@
 
         beforeEach(inject(
             function getViewModel($controller, $rootScope, $rootElement, $compile, GameSquare, Saber) {
-                var directive = angular.element('<div data-first-attack-scene=""></div>');
+                var directive = angular.element('<div data-tutorial=""></div>');
                 $compile(directive)($rootScope.$new());
                 $rootScope.$digest();
-                scope = directive.children().scope();
+                scope = directive.children().children().scope();
                 GameSquareModel = GameSquare;
                 SaberModel = Saber;
                 jasmine.Clock.useMock();
             }));
 
-        it('should load the map [10 by 5]', function loadCache() {
+        it('should load the map [10 by 5]', function loadMap() {
             expect(scope.map.length).toEqual(10);
             expect(scope.map[0].length).toEqual(5);
         });

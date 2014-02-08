@@ -10,6 +10,9 @@
                 .when('/tutorial', {
                     templateUrl: 'pages/tutorial.html'
                 })
+                .when('/versus', {
+                    templateUrl: 'pages/versus.html'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });
