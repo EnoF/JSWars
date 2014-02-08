@@ -23,7 +23,14 @@
                 </div>
             </div>
         </div>
+
     </div>
+    <div class="end-turn"
+         data-ng-show="isEndingTurn()"
+         data-ng-class="{ 'hide-end-turn': isEndingTurn() }">End turn
+    </div>
+    <div class="end-turn-background"
+         data-ng-show="isEndingTurn()"></div>
     <div class="button"
          data-ng-click="endTurn()">End Turn
     </div>

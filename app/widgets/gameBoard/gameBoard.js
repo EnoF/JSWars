@@ -25,6 +25,14 @@
             $scope.isInAttackRange = scene.isInAttackRange;
 
             $scope.endTurn = scene.endTurn;
+
+            $scope.isEndingTurn = scene.isEndingTurn;
+
+            function hideEndTurn() {
+                $scope.$apply();
+            }
+
+            scene.setNotify(hideEndTurn);
         });
 
     app.directive('gameBoard', function gameBoardDirective() {

@@ -13,7 +13,9 @@
 
             this.private = {
                 activeGameSquare: null,
+                isEndingTurn: false,
                 map: [],
+                notify: null,
                 players: new LinkedHashMap(),
                 currentPlayerNode: null,
                 initializeMapCollumn: function initializeMapCollumn(column, amountOfSquares) {
@@ -136,7 +138,17 @@
                     } else {
                         this.private.currentPlayerNode = nextPlayer;
                     }
+                    this.private.isEndingTurn = true;
+                    setTimeout(this.public.startNextTurn, 1500);
+                },
+                startNextTurn: function startNextTurn() {
                     this.protected.startTurn(this.private.currentPlayerNode.getValue());
+                    this.private.isEndingTurn = false;
+                    console.log('lol', this.private.notify)
+                    this.private.notify();
+                },
+                setNotify: function setNotify(callback) {
+                    this.private.notify = callback;
                 },
                 getActiveGameSquare: function getActiveGameSquare() {
                     return this.private.activeGameSquare;
@@ -155,6 +167,9 @@
                         return null;
                     }
                     return this.private.map[x][y] || null;
+                },
+                isEndingTurn: function isEndingTurn() {
+                    return this.private.isEndingTurn;
                 },
                 openActionPanel: function openActionPanel(x, y) {
                     var activeSquare = this.public.getPosition(x, y);

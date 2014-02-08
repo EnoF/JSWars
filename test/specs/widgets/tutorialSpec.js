@@ -37,6 +37,16 @@
             expectEnemyDmg();
         });
 
+        it('should be able to end the turn', function endTurn() {
+            whenEndingTurn();
+            expectPlayerTwoTurn();
+        });
+
+        function whenEndingTurn() {
+            scope.endTurn();
+            jasmine.Clock.tick(1500);
+        }
+
         function whenAttackingTheEnemyWithExcalibur() {
             var square = scope.map[3][2];
             scope.action(3, 2);
@@ -51,6 +61,10 @@
             expect(enemy.getLastAppliedDmg()).toEqual(320);
             jasmine.Clock.tick(1500);
             expect(enemy.getLastAppliedDmg()).toEqual(0);
+        }
+
+        function expectPlayerTwoTurn() {
+            expect(scope.getCurrentPlayer().getName()).toEqual('Player 2');
         }
     });
 }(window.whereIt));

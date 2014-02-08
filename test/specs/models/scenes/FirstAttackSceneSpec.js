@@ -226,10 +226,16 @@
 
         function whenEndingTheTurn() {
             scene.endTurn();
+            expect(scene.isEndingTurn()).toEqual(true);
+            jasmine.Clock.tick(1500);
+            expect(scene.isEndingTurn()).toEqual(false);
         }
 
         function whenEnemyIsEndingTheTurn() {
             scene.endTurn();
+            expect(scene.isEndingTurn()).toEqual(true);
+            jasmine.Clock.tick(1500);
+            expect(scene.isEndingTurn()).toEqual(false);
         }
 
         function whenMovingAgain() {
