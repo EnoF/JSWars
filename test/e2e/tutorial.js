@@ -3,9 +3,9 @@
  *
  * @author Andy Tang
  */
-(function FirstAttackSceneScenarios(whereIt) {
+(function tutorialScenarios(whereIt) {
     'use strict';
-    describe('First Attack Scene Scenarios', function FirstAttackScene() {
+    describe('Tutorial Scenarios', function tutorial() {
 
         beforeEach(function () {
             browser().navigateTo('/#/tutorial');
@@ -22,8 +22,8 @@
 
         it('should show a menu when clicking on a character', function actionMenu() {
             clickOnSaber();
-            expect(element('.game-square:has(.saber) .action-menu li').count()).toEqual(3);
-            var text = element('.game-square:has(.saber) li').text();
+            expect(element('.game-square-container:has(.saber) .action-menu li').count()).toEqual(3);
+            var text = element('.game-square-container:has(.saber) li').text();
             expect(text).toContain('attack');
             expect(text).toContain('move');
             expect(text).toContain('cancel');

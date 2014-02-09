@@ -44,3 +44,58 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.callout(@value) {
+  -webkit-touch-callout: @value;
+  -webkit-user-select: @value;
+  -khtml-user-select: @value;
+  -moz-user-select: @value;
+  -ms-user-select: @value;
+  user-select: @value;
+}
+
+.filter(@value) {
+  -webkit-filter: @value;
+  -moz-filter: @value;
+  -o-filter: @value;
+  -ms-filter: @value;
+  filter: @value
+}
+
+.animation(@value) {
+  -webkit-animation: @value; /* Safari 4+ */
+  -moz-animation: @value; /* Fx 5+ */
+  -o-animation: @value; /* Opera 12+ */
+  animation: @value; /* IE 10+ */
+}
+
+.backgroundSize(@value) {
+  -webkit-background-size: @value;
+  -moz-background-size: @value;
+  -o-background-size: @value;
+  background-size: @value;
+}
+
+.hiding() {
+  from {
+    .opacity(1);
+    top: -40px;
+    font-size: 20px;
+  }
+  to {
+    .opacity(0);
+    top: -20px;
+    font-size: 15px;
+  }
+}
+
+.hiding-end-turn() {
+  from {
+    .opacity(1);
+    margin-left: -20px;
+  }
+  to {
+    .opacity(0);
+    margin-left: 200px;
+  }
+}
