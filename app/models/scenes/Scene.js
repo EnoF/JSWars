@@ -144,7 +144,6 @@
                 startNextTurn: function startNextTurn() {
                     this.protected.startTurn(this.private.currentPlayerNode.getValue());
                     this.private.isEndingTurn = false;
-                    console.log('lol', this.private.notify)
                     this.private.notify();
                 },
                 setNotify: function setNotify(callback) {

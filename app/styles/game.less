@@ -6,31 +6,56 @@
 @import 'reset.less';
 @import 'mixins.less';
 
-@mainColor: #0d3349;
+@main-color: #fff;
+@main-bg: #000;
+
+@allowed-bg: rgba(38, 100, 55, 0.50);
+
+@disabled-text: #a5a5a5;
+@disabled-bg: rgba(100, 100, 100, 0.5);
+
+@inactive-text: #d3d3d3;
+@inactive-bg: rgba(25, 25, 25, 0.8);
+
+@active-text: #181818;
+@active-bg: rgba(179, 179, 179, 0.80);
 @square-size: 80px;
 
+@highlight-bg: drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.95));
+
+@hero-aura: drop-shadow(0px 0px 10px rgba(0, 255, 255, 0.95));
+@soldier-aura: drop-shadow(0px 0px 10px rgba(255, 0, 7, 0.95));
+
 @-webkit-keyframes hiding {
-  from {
-    .opacity(1);
-    top: -40px;
-    font-size: 20px;
-  }
-  to {
-    .opacity(0);
-    top: -20px;
-    font-size: 15px;
-  }
+  .hiding();
 }
 
-@-webkit-keyframes hide-end-turn {
-  from {
-    .opacity(1);
-    margin-left: -20px;
-  }
-  to {
-    .opacity(0);
-    margin-left: 200px;
-  }
+@-moz-keyframes hiding {
+  .hiding();
+}
+
+@-o-keyframes hiding {
+  .hiding();
+}
+
+@keyframes hiding {
+  .hiding();
+}
+
+@-webkit-keyframes hiding-end-turn {
+  .hiding-end-turn();
+}
+
+@-moz-keyframes hiding-end-turn {
+  .hiding-end-turn();
+}
+
+@-o-keyframes hiding-end-turn {
+  .hiding-end-turn();
+}
+
+@keyframes hiding-end-turn {
+  .hiding-end-turn();
 }
 
 .column {
@@ -39,85 +64,92 @@
 }
 
 body {
-  background: url('../images/scenebg/sword_art.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: @main-bg no-repeat center center fixed;
+  .backgroundSize(cover);
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   .prevent-selection();
   overflow-x: hidden;
-}
 
-h1 {
-  .borderRadius(12px);
-  background: rgba(150, 150, 150, 0.8);
-  padding: 20px;
-  margin: 30px 30px;
-  font-size: 24px;
-  font-weight: bold;
-  color: @mainColor
-}
-
-h2 {
-  margin: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  color: @mainColor;
-}
-
-nav {
-  .borderRadius(12px);
-  overflow: hidden;
-  background: rgba(150, 150, 150, 0.8);
-  margin: 30px;
-
-  a:link,
-  a:visited {
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #36363b;
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 15px 30px 15px 30px;
-
-    &:hover {
-      background: rgba(50, 50, 50, 0.8);
-      color: #fff;
-    }
-  }
-}
-
-.game-board {
-  .borderRadius(12px);
-  position: absolute;
-  background: rgba(150, 150, 150, 0.5);
-  padding: 20px;
-  margin: 30px 30px;
-
-  .view-port {
-    width: 100%;
-    overflow: auto;
-
-    .view-content {
-      width: 200%;
-    }
-  }
-
-  .game-square {
-    position: relative;
-    border: @mainColor solid 3px;
+  h1 {
     .borderRadius(12px);
+    .filter(@highlight-bg);
+    padding: 20px;
+    margin: 30px 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: @main-color;
+  }
 
-    width: @square-size;
-    height: @square-size;
+  h2 {
+    .filter(@highlight-bg);
+    margin: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: @main-color;
+  }
 
-    .character {
+  nav {
+    .borderRadius(12px);
+    overflow: hidden;
+    background: @inactive-bg;
+    margin: 30px;
+
+    a:link,
+    a:visited {
+      color: @inactive-text;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 15px 30px 15px 30px;
+
+      &:hover {
+        background: @active-bg;
+        color: @active-text;
+      }
+    }
+  }
+
+  .game-board {
+    .borderRadius(12px);
+    position: absolute;
+    background: rgba(0, 127, 127, 0.258824);
+    padding: 20px;
+    margin: 30px 30px;
+
+    .view-port {
+      width: 100%;
+      overflow: auto;
+      -webkit-perspective: 700px;
+
+      .camera {
+        -webkit-transform-style: preserve-3d;
+      }
+
+      .view-content {
+        width: 200%;
+      }
+    }
+
+    .game-square-container {
+      position: relative;
+    }
+    .game-square {
+      position: relative;
+      border: #0d3349 solid 3px;
+      .borderRadius(12px);
+      box-shadow: 1px 1px 30px rgba(0, 255, 255, 0.95) inset;
+
       width: @square-size;
       height: @square-size;
+
+      .character {
+        width: @square-size;
+        height: @square-size;
+      }
 
       .hp-bar {
         width: @square-size;
@@ -141,125 +173,123 @@ nav {
         right: 5px;
         font-weight: bold;
         color: #914932;
+        .filter(drop-shadow(0px 0px 10px rgba(255, 0, 7, 0.95)));
+      }
+
+      .saber {
+        background: url('../images/characters/female_warrior.png') no-repeat;
+        background-size: @square-size @square-size;
+        .filter(@hero-aura);
+      }
+
+      .sword-soldier {
+        background: url('../images/characters/male_warrior.png') no-repeat;
+        background-size: @square-size @square-size;
+        .filter(@soldier-aura);
+      }
+
+      .hide {
+        .animation(hiding 1.5s);
       }
     }
 
-    .saber {
-      background: url('../images/characters/female_warrior.png') no-repeat;
-      background-size: 80px 80px;
-    }
-
-    .sword-soldier {
-      background: url('../images/characters/male_warrior.png') no-repeat;
-      background-size: 80px 80px;
-    }
-
-    .hide {
-      -webkit-animation: hiding 1.5s;
-    }
-  }
-
-  .action-menu,
-  .attack-list {
-    position: absolute;
-    .borderRadius(12px);
-    z-index: 1;
-    color: #e5e5e5;
-
-    left: @square-size;
-    top: 0;
-    background: rgba(50, 50, 50, 0.5);
-
-    li {
-      white-space: nowrap;
-      padding: 5px 15px 5px 15px;
-
-      &:first-child {
-        .border-top-radius(12px);
-      }
-
-      &.disabled {
-        color: #a5a5a5;
-        background: rgba(100, 100, 100, 0.5);
-        cursor: not-allowed;
-      }
-
-      &:hover:not(.disabled) {
-        color: #fff;
-        background: rgba(0, 0, 0, 0.8);
-        cursor: pointer;
-      }
-
-      &:last-child {
-        .border-bottom-radius(12px);
-      }
-    }
-  }
-
-  .move-mode,
-  .attack-mode {
-    .move-allowed,
-    .attack-allowed {
-      background: rgba(38, 100, 55, 0.50)
-    }
     .action-menu,
     .attack-list {
-      visibility: hidden;
+      position: absolute;
+      .borderRadius(12px);
+      z-index: 1;
+      color: @inactive-text;
+
+      left: @square-size;
+      top: 0;
+      background: @inactive-bg;
+
+      li {
+        white-space: nowrap;
+        padding: 5px 15px 5px 15px;
+
+        &:first-child {
+          .border-top-radius(12px);
+        }
+
+        &.disabled {
+          color: @disabled-text;
+          background: @disabled-bg;
+          cursor: not-allowed;
+        }
+
+        &:hover:not(.disabled) {
+          color: @active-text;
+          background: @active-bg;
+          cursor: pointer;
+        }
+
+        &:last-child {
+          .border-bottom-radius(12px);
+        }
+      }
+    }
+
+    &.move-mode,
+    &.attack-mode {
+      .move-allowed,
+      .attack-allowed {
+        background: @allowed-bg;
+      }
+      .action-menu,
+      .attack-list {
+        visibility: hidden;
+      }
+    }
+
+    .end-turn {
+      color: @inactive-text;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: 20px;
+      font-size: 40px;
+      z-index: 2;
+    }
+
+    .end-turn-background {
+      background: @inactive-bg;
+      position: absolute;
+      left: -500px;
+      top: 50%;
+      width: 3000px;
+      height: 40px;
+      padding: 20px;
+      margin-top: -20px;
+    }
+
+    .hide-end-turn {
+      .animation(hide-end-turn 1.5s ease-in);
     }
   }
 
-  .end-turn {
-    position: absolute;
-    color: #c6c6c6;
-    left: 50%;
-    top: 50%;
-    margin-left: 20px;
-    font-size: 40px;
-    z-index: 2;
+  .button {
+    width: @square-size;
+    color: @inactive-text;
+    background: @inactive-bg;
+
+    float: right;
+    display: inline-block;
+    padding: 5px;
+    height: 30px;
+    line-height: 30px;
+    margin: 20px;
+    font-weight: bold;
+    border: none;
+    .borderRadius(5px);
+    text-align: center;
+    cursor: pointer;
+
+    .callout(none);
+
+    &:active {
+      background: @active-bg;
+      color: @active-text;
+    }
   }
-
-  .end-turn-background {
-    position: absolute;
-    left: -500px;
-    top: 50%;
-    width: 3000px;
-    height: 40px;
-    padding: 20px;
-    margin-top: -20px;
-    background: rgba(50, 50, 50, 0.8);
-  }
-
-  .hide-end-turn {
-    -webkit-animation: hide-end-turn 1.5s ease-in;
-  }
-}
-
-.button {
-  float: right;
-  display: inline-block;
-  padding: 5px;
-  width: @square-size;
-  height: 30px;
-  line-height: 30px;
-  margin: 20px;
-  font-weight: bold;
-  background: rgba(50, 50, 50, 0.8);
-  color: #d3d3d3;
-  border: none;
-  .borderRadius(5px);
-  text-align: center;
-  cursor: pointer;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  &:active {
-    background: rgba(150, 150, 150, 0.8);
-    color: #3d3d3d;
-  }
-
 }

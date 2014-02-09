@@ -1,6 +1,8 @@
-<section class="game-square">
-    <div data-character="getCharacter()"
-         data-ng-if="isOccupied()">
+<section class="game-square-container">
+    <div class="game-square">
+        <div data-character="getCharacter()"
+             data-ng-if="isOccupied()">
+        </div>
     </div>
     <ul class="action-menu"
         data-ng-click="stopPropagation($event)"

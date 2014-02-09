@@ -70,6 +70,7 @@
                 this.constructor = function constructor() {
                     this.super.constructor(20, 10);
                     this.protected.initializePlayers();
+                    this.protected.endTurn(this.public.getPlayers().getLast().getValue());
                 };
             });
         }]);

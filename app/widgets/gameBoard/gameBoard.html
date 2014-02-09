@@ -9,16 +9,18 @@
         <h2>{{ getCurrentPlayer().getName() }}</h2>
 
         <div class="view-port">
-            <div class="view-content">
-                <div class="column"
-                     data-ng-repeat="column in map">
-                    <div data-ng-repeat="square in column">
-                        <div data-ng-class="{
+            <div class="camera">
+                <div class="view-content">
+                    <div class="column"
+                         data-ng-repeat="column in map">
+                        <div data-ng-repeat="square in column">
+                            <div data-ng-class="{
                         'move-allowed': isInMoveRange($parent.$index, $index),
                         'attack-allowed': isInAttackRange($parent.$index, $index)
                      }"
-                             data-game-square="square"
-                             data-ng-click="action($parent.$index, $index)"/>
+                                 data-game-square="square"
+                                 data-ng-click="action($parent.$index, $index)"/>
+                        </div>
                     </div>
                 </div>
             </div>
