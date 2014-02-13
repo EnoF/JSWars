@@ -14,6 +14,8 @@
             this.extend = 'GameObject';
 
             this.private = {
+                id: 0,
+                player: null,
                 boardImage: null,
                 hasAttackedInThisTurn: false,
                 hasMovedInThisTurn: false,
@@ -73,13 +75,21 @@
                 },
                 setHasMoved: function setHasMoved(hasMoved) {
                     this.private.hasMovedInThisTurn = hasMoved;
+                },
+                getPlayer: function getPlayer() {
+                    return this.private.player;
+                },
+                getId: function getId() {
+                    return this.private.id;
                 }
             };
 
-            this.constructor = function constructor(hp, attack, defence, mobility, sizeX, sizeY) {
+            this.constructor = function constructor(id, player, hp, attack, defence, mobility, sizeX, sizeY) {
                 this.super.constructor(hp, defence, sizeX, sizeY);
                 this.protected.attack = attack;
                 this.protected.mobility = mobility;
+                this.private.player = player;
+                this.private.id = id;
             };
         });
     }]);

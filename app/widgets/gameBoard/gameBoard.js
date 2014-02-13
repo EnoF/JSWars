@@ -28,6 +28,10 @@
 
             $scope.isEndingTurn = scene.isEndingTurn;
 
+            $scope.hasGameEnded = scene.hasGameEnded;
+
+            $scope.getWinner = scene.getWinner;
+
             function hideEndTurn() {
                 $scope.$apply();
             }

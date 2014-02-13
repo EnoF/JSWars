@@ -29,6 +29,9 @@
                 },
                 removeTarget: function removeTarget(target) {
                     setTimeout(function removeTarget() {
+                        var character = target.getGameObject();
+                        var player = character.getPlayer();
+                        player.getUnits().remove(character.getId());
                         target.setGameObject(null);
                     }, 500);
                 }

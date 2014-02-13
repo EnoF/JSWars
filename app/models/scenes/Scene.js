@@ -14,6 +14,8 @@
             this.private = {
                 activeGameSquare: null,
                 isEndingTurn: false,
+                isGameEnded: false,
+                winner: null,
                 map: [],
                 notify: null,
                 players: new LinkedHashMap(),
@@ -54,6 +56,10 @@
                     for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
                         unit.getValue().setActive(false);
                     }
+                },
+                hasGameEnded: function hasGameEnded() {
+                    var enemy = this.protected.getNextPlayer().getValue();
+                    return enemy.getUnits().isEmpty();
                 },
                 startTurn: function startTurn(player) {
                     var units = player.getUnits();
@@ -110,6 +116,14 @@
                     for (var node = list.getFirst(); node; node = node.getNext()) {
                         node.getValue().setActive(active);
                     }
+                },
+                getNextPlayer: function getNextPlayer() {
+                    var currentPlayer = this.private.currentPlayerNode;
+                    var nextPlayerNode = currentPlayer.getNext();
+                    if (nextPlayerNode === null) {
+                        nextPlayerNode = this.private.players.getFirst();
+                    }
+                    return nextPlayerNode;
                 }
             };
 
@@ -131,13 +145,9 @@
                 },
                 endTurn: function endTurn() {
                     var currentPlayerNode = this.private.currentPlayerNode;
-                    var nextPlayer = currentPlayerNode.getNext();
+                    var nextPlayer = this.protected.getNextPlayer();
                     this.protected.endTurn(currentPlayerNode.getValue());
-                    if (nextPlayer === null) {
-                        this.private.currentPlayerNode = this.private.players.getFirst();
-                    } else {
-                        this.private.currentPlayerNode = nextPlayer;
-                    }
+                    this.private.currentPlayerNode = nextPlayer;
                     this.private.isEndingTurn = true;
                     setTimeout(this.public.startNextTurn, 1500);
                 },
@@ -166,6 +176,20 @@
                         return null;
                     }
                     return this.private.map[x][y] || null;
+                },
+                getWinner: function getWinner() {
+                    var list = this.private.players;
+                    var playerNode = list.getFirst();
+                    var player;
+                    if (this.protected.hasGameEnded()) {
+                        for (playerNode; playerNode; playerNode = playerNode.getNext()) {
+                            player = playerNode.getValue();
+                            if (!player.getUnits().isEmpty()) {
+                                return player;
+                            }
+                        }
+                    }
+                    return null;
                 },
                 isEndingTurn: function isEndingTurn() {
                     return this.private.isEndingTurn;
@@ -214,6 +238,9 @@
                         return false;
                     }
                     return this.private.activeGameSquare.isInAttackMode();
+                },
+                hasGameEnded: function hasGameEnded() {
+                    return this.protected.hasGameEnded();
                 },
                 hasActionPanelOpen: function hasActionPanelOpen() {
                     if (this.private.activeGameSquare === null) {
