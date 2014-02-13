@@ -49,7 +49,7 @@
 
         whereIt('should be able to highlight where the character is allowed to move to',
             function checkWhereToMoveTo(mobility, sizeX, sizeY, spawnPointX, spawnPointY, newX, newY, allowed) {
-                var character = new CharacterModel(0, 0, 0, mobility, sizeX, sizeY);
+                var character = new CharacterModel(0, null, 0, 0, 0, mobility, sizeX, sizeY);
                 scene.spawnCharacter(character, spawnPointX, spawnPointY);
                 scene.action(spawnPointX, spawnPointY);
                 scene.getActiveGameSquare().startMoveMode();

@@ -18,7 +18,7 @@
 
         whereIt('should be able to retrieve the stats of an character',
             function retrieveStats(hp, attack, defence, mobility, sizeX, sizeY) {
-                var character = new CharacterModel(hp, attack, defence, mobility, sizeX, sizeY);
+                var character = new CharacterModel(0, null, hp, attack, defence, mobility, sizeX, sizeY);
                 expect(character.getHp()).toEqual(hp);
                 expect(character.getAttack()).toEqual(attack);
                 expect(character.getDefence()).toEqual(defence);

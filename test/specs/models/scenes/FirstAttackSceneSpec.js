@@ -173,11 +173,12 @@
 
         it('should remove a character when killed', function removeCharacter() {
             givenPlayerSpanwedNextToEnemy();
-
+            expect(scene.hasGameEnded()).toEqual(false);
             whenOpeningActionMenu();
             whenAttackingWithFirstSkill();
 
             expectEnemyToBeDead();
+            expectPlayerOneToHaveWon();
         });
 
         function givenPlayerSpanwedNextToEnemy() {
@@ -267,6 +268,11 @@
             expect(scene.getPosition(4, 3).isOccupied()).toEqual(true);
             jasmine.Clock.tick(1500);
             expect(scene.getPosition(4, 3).isOccupied()).toEqual(false);
+        }
+
+        function expectPlayerOneToHaveWon() {
+            expect(scene.hasGameEnded()).toEqual(true);
+            expect(scene.getWinner().getName()).toEqual('Player 1');
         }
 
     });

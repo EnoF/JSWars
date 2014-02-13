@@ -18,10 +18,10 @@
                     var list = this.public.getPlayers();
                     var player = new Player('Player 1');
                     var player2 = new Player('Player 2');
-                    var saber = new Saber();
-                    var enemy = new SwordSoldier();
-                    player.getUnits().add(0, saber);
-                    player2.getUnits().add(0, enemy);
+                    var saber = new Saber(0, player);
+                    var enemy = new SwordSoldier(0, player2);
+                    player.getUnits().add(saber.getId(), saber);
+                    player2.getUnits().add(enemy.getId(), enemy);
                     this.public.getPosition(x, y).setGameObject(saber);
                     this.public.getPosition(enemyX, enemyY).setGameObject(enemy);
                     list.add(0, player);

@@ -20,8 +20,8 @@
         whereIt('should be able initialize different Skills',
             function skillWithDifferentStats(dmgAmp, range, aoe, att, def, dmg) {
                 var skill = new SkillModel('name', dmgAmp, range, aoe);
-                var executer = new CharacterModel(0, att, 0, 0, 0);
-                var receiver = new CharacterModel(0, 0, def, 0, 0);
+                var executer = new CharacterModel(0, null, 0, att, 0, 0, 0);
+                var receiver = new CharacterModel(0, null, 0, 0, def, 0, 0);
                 expect(skill.calcDmg(executer, receiver)).toEqual(dmg);
             }, [
                 {
