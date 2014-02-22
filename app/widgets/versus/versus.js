@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.controller('versusViewModel',
+    app.viewModel('versusViewModel',
         function versusViewModel($scope, VersusScene) {
             $scope.scene = new VersusScene();
         });

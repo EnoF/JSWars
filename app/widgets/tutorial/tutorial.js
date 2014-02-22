@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.controller('tutorialViewModel',
+    app.viewModel('tutorialViewModel',
         function tutorialViewModel($scope, FirstAttackScene) {
             $scope.scene = new FirstAttackScene(3, 2, 5, 2);
         });

@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.controller('gameSquareViewModel',
+    app.viewModel('gameSquareViewModel',
         function gameSquareViewModel($scope) {
             var square = $scope.gameSquare;
 

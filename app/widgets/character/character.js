@@ -8,7 +8,7 @@
 
     var app = angular.module('jsWars');
 
-    app.controller('CharacterViewModel', function CharacterViewModel($scope) {
+    app.viewModel('CharacterViewModel', function CharacterViewModel($scope) {
         $scope.hp = $scope.character.getHp();
 
         $scope.getHpPercentage = $scope.character.getHpPercentage;
