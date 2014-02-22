@@ -14,19 +14,36 @@
             this.extend = 'GameObject';
 
             this.private = {
-                id: 0,
-                player: null,
-                boardImage: null,
-                hasAttackedInThisTurn: false,
-                hasMovedInThisTurn: false,
-                lastAppliedDmg: 0,
-                notify: null
+                id: {
+                    get: 0
+                },
+                player: {
+                    get: null
+                },
+                boardImage: {
+                    getSet: null
+                },
+                hasAttacked: {
+                    set: false
+                },
+                hasMoved: {
+                    set: false
+                },
+                lastAppliedDmg: {
+                    get: 0
+                },
+                notify: {
+                    set: null
+                }
             };
 
             this.protected = {
-                attack: 0,
-                mobility: 0,
-                moves: []
+                attack: {
+                    get: 0
+                },
+                mobility: {
+                    get: 0
+                }
             };
 
             this.public = {
@@ -36,27 +53,9 @@
                     this.private.lastAppliedDmg = dmg;
                     setTimeout(this.public.resetLastAppliedDmg, 1500);
                 },
-                getLastAppliedDmg: function getLastAppliedDmg() {
-                    return this.private.lastAppliedDmg;
-                },
                 resetLastAppliedDmg: function resetLastAppliedDmg() {
                     this.private.lastAppliedDmg = 0;
                     this.private.notify();
-                },
-                setNotify: function setNotify(notify) {
-                    this.private.notify = notify;
-                },
-                getAttack: function getAttack() {
-                    return this.protected.attack;
-                },
-                getBoardImage: function getBoardImage() {
-                    return this.private.boardImage;
-                },
-                setBoardImage: function setBoardImage(image) {
-                    this.private.boardImage = image;
-                },
-                getMobility: function getMobility() {
-                    return this.protected.mobility;
                 },
                 canAttack: function canAttack() {
                     return true;
@@ -65,22 +64,10 @@
                     return true;
                 },
                 hasAttacked: function hasAttacked() {
-                    return this.private.hasAttackedInThisTurn;
-                },
-                setHasAttacked: function setHasAttacked(hasAttacked) {
-                    this.private.hasAttackedInThisTurn = hasAttacked;
+                    return this.private.hasAttacked;
                 },
                 hasMoved: function hasMoved() {
-                    return this.private.hasMovedInThisTurn;
-                },
-                setHasMoved: function setHasMoved(hasMoved) {
-                    this.private.hasMovedInThisTurn = hasMoved;
-                },
-                getPlayer: function getPlayer() {
-                    return this.private.player;
-                },
-                getId: function getId() {
-                    return this.private.id;
+                    return this.private.hasMoved;
                 }
             };
 

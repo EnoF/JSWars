@@ -12,9 +12,13 @@
         return clazz(function Skill() {
 
             this.private = {
-                name: '',
+                name: {
+                    get: ''
+                },
                 dmgAmp: 1,
-                range: 1,
+                range: {
+                    get: 1
+                },
                 aoe: 0
             };
 
@@ -56,12 +60,6 @@
                             this.protected.removeTarget(targetSquare);
                         }
                     }
-                },
-                getName: function getName() {
-                    return this.private.name;
-                },
-                getRange: function getRange() {
-                    return this.private.range;
                 }
             };
 

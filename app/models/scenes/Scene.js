@@ -12,13 +12,21 @@
         return clazz(function Scene() {
 
             this.private = {
-                activeGameSquare: null,
+                activeGameSquare: {
+                    get: null
+                },
                 isEndingTurn: false,
                 isGameEnded: false,
                 winner: null,
-                map: [],
-                notify: null,
-                players: new LinkedHashMap(),
+                map: {
+                    get: []
+                },
+                notify: {
+                    set: null
+                },
+                players: {
+                    get: new LinkedHashMap()
+                },
                 currentPlayerNode: null,
                 initializeMapCollumn: function initializeMapCollumn(column, amountOfSquares) {
                     this.private.map.push(this.private.initializeMapRow(column, amountOfSquares));
@@ -156,20 +164,8 @@
                     this.private.isEndingTurn = false;
                     this.private.notify();
                 },
-                setNotify: function setNotify(callback) {
-                    this.private.notify = callback;
-                },
-                getActiveGameSquare: function getActiveGameSquare() {
-                    return this.private.activeGameSquare;
-                },
                 getCurrentPlayer: function getCurrentPlayer() {
                     return this.private.currentPlayerNode.getValue();
-                },
-                getMap: function getMap() {
-                    return this.private.map;
-                },
-                getPlayers: function getPlayers() {
-                    return this.private.players;
                 },
                 getPosition: function getPosition(x, y) {
                     if (this.private.map[x] === undefined) {

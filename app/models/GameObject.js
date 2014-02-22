@@ -16,42 +16,38 @@
             };
 
             this.protected = {
-                hp: 0,
-                maxHp: 0,
-                defence: 0,
-                sizeX: 1,
-                sizeY: 1,
-                moves: [],
+                hp: {
+                    get: 0
+                },
+                maxHp: {
+                    get: 0
+                },
+                defence: {
+                    get: 0
+                },
+                sizeX: {
+                    get: 1
+                },
+                sizeY: {
+                    get: 1
+                },
+                moves: {
+                    get: []
+                },
                 setMoves: function setMoves(moves) {
                     this.protected.moves = moves;
                 }
             };
 
             this.public = {
-                getHp: function getHp() {
-                    return this.protected.hp;
-                },
                 setHp: function setHp(hp) {
                     if (hp < 0) {
                         hp = 0;
                     }
                     this.protected.hp = hp;
                 },
-
-                getMaxHp: function getMaxHp() {
-                    return this.protected.maxHp;
-                },
                 getHpPercentage: function getHpPercentage() {
                     return this.public.getHp() / this.public.getMaxHp() * 100;
-                },
-                getDefence: function getDefence() {
-                    return this.protected.defence;
-                },
-                getSizeX: function getSizeX() {
-                    return this.protected.sizeX;
-                },
-                getSizeY: function getSizeY() {
-                    return this.protected.sizeY;
                 },
                 canMove: function canMove() {
                     return false;
@@ -61,9 +57,6 @@
                 },
                 hasMoves: function hasMoves() {
                     return this.protected.moves.length > 0;
-                },
-                getMoves: function getMoves() {
-                    return this.protected.moves;
                 },
                 isActive: function isActive() {
                     return this.private.isActive;

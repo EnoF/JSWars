@@ -12,14 +12,22 @@
         return clazz(function GameSquare() {
 
             this.private = {
-                x: null,
-                y: null,
-                gameObject: null,
+                x: {
+                    getSet: null
+                },
+                y: {
+                    getSet: null
+                },
+                gameObject: {
+                    getSet: null
+                },
                 isOpened: false,
                 isSelectingAttack: false,
                 inMoveMode: false,
                 inAttackMode: false,
-                selectedSkill: null,
+                selectedSkill: {
+                    get: null
+                },
                 getActionList: function getActionList() {
                     var list = [];
                     if (this.private.gameObject === null || !this.private.isOpened || !this.
@@ -49,20 +57,8 @@
             };
 
             this.public = {
-                getX: function getX() {
-                    return this.private.x;
-                },
-                getY: function getY() {
-                    return this.private.y;
-                },
                 isOccupied: function isOccupied() {
                     return this.private.gameObject !== null;
-                },
-                getGameObject: function getGameObject() {
-                    return this.private.gameObject;
-                },
-                setGameObject: function setGameObject(gameObject) {
-                    this.private.gameObject = gameObject;
                 },
                 isOpened: function isOpened() {
                     return this.private.isOpened;
@@ -138,9 +134,6 @@
                     this.private.selectedSkill = this.private.getAttackList()[skillIndex] || null;
                     this.private.inAttackMode = true;
                     this.private.isSelectingAttack = false;
-                },
-                getSelectedSkill: function getSelectedSkill() {
-                    return this.private.selectedSkill;
                 },
                 resolveAction: function resolveAction(action) {
                     if (action === 'move') {

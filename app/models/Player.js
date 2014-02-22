@@ -12,16 +12,11 @@
         return clazz(function Player() {
 
             this.private = {
-                name: null,
-                units: new LinkedHashMap()
-            };
-
-            this.public = {
-                getName: function getName() {
-                    return this.private.name;
+                name: {
+                    get: null
                 },
-                getUnits: function getUnits() {
-                    return this.private.units;
+                units: {
+                    get: new LinkedHashMap()
                 }
             };
 
