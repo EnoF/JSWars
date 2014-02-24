@@ -20,6 +20,7 @@
                     var player2 = new Player('Player 2');
                     var saber = new Saber(0, player);
                     var enemy = new SwordSoldier(0, player2);
+                    player.setAllowedToPerformActions(true);
                     player.getUnits().add(saber.getId(), saber);
                     player2.getUnits().add(enemy.getId(), enemy);
                     this.public.getPosition(x, y).setGameObject(saber);

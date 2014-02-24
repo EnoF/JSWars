@@ -75,7 +75,7 @@
                 this.super.constructor(hp, defence, sizeX, sizeY);
                 this.protected.attack = attack;
                 this.protected.mobility = mobility;
-                this.private.player = player;
+                this.private.player = player || null;
                 this.private.id = id;
             };
         });

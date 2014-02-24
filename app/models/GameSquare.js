@@ -63,12 +63,35 @@
                 isOpened: function isOpened() {
                     return this.private.isOpened;
                 },
+                canPerformActions: function canPerformActions() {
+                    var player;
+                    if (this.public.isOccupied() &&
+                        (player = this.private.gameObject.getPlayer()) !== null) {
+                        return player.isAllowedToPerformActions();
+                    } else {
+                        return false;
+                    }
+                },
+                canAttack: function canAttack() {
+                    if (this.public.isOccupied()) {
+                        return this.private.gameObject.canMove();
+                    } else {
+                        return false;
+                    }
+                },
                 hasAttacked: function hasAttacked() {
                     var gameObject = this.private.gameObject;
                     if (gameObject instanceof Character) {
                         return gameObject.hasAttacked();
                     }
                     return false;
+                },
+                canMove: function canMove() {
+                    if (this.public.isOccupied()) {
+                        return this.private.gameObject.canAttack();
+                    } else {
+                        return false;
+                    }
                 },
                 hasMoved: function hasMoved() {
                     var gameObject = this.private.gameObject;

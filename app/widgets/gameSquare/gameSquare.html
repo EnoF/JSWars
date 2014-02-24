@@ -7,9 +7,13 @@
     <ul class="action-menu"
         data-ng-click="stopPropagation($event)"
         data-ng-show="isOpened() && !isSelectingAttack()">
-        <li data-ng-repeat="action in getActionList()"
-            data-ng-click="resolveAction(action)"
-            data-ng-class="{ 'disabled': shouldDisable(action) }">{{ action }}
+        <li data-ng-click="resolveAction('move')"
+            data-ng-show="canMove() && canPerformActions()"
+            data-ng-class="{ 'disabled': shouldDisable('move') }">move
+        </li>
+        <li data-ng-click="resolveAction('attack')"
+            data-ng-show="canAttack() && canPerformActions()"
+            data-ng-class="{ 'disabled': shouldDisable('attack') }">attack
         </li>
         <li data-ng-click="resolveAction('cancel')">cancel</li>
     </ul>

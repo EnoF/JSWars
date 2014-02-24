@@ -32,6 +32,12 @@
 
             $scope.shouldDisable = square.shouldDisable;
 
+            $scope.canAttack = square.canAttack;
+
+            $scope.canMove = square.canMove;
+
+            $scope.canPerformActions = square.canPerformActions;
+
             $scope.stopPropagation = function stopPropagation($event) {
                 $event.cancelBubble = true;
             };

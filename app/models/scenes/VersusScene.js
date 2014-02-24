@@ -14,13 +14,13 @@
                 this.extend = 'Scene';
 
                 this.private = {
-                    createNewUnits: function createNewUnits(list) {
+                    createNewUnits: function createNewUnits(player, list) {
                         list.add(0, new Saber());
                         for (var i = 1; i < 5; i++) {
-                            list.add(i, new SwordSoldier());
+                            list.add(i, new SwordSoldier(i, player));
                         }
                     },
-                    calculatPositions: function calculatePositions(unitsAdded, x, y) {
+                    calculatePositions: function calculatePositions(unitsAdded, x, y) {
                         var position = {
                             x: x,
                             y: y
@@ -45,7 +45,7 @@
                         var unitsAdded = 0;
                         var position;
                         do {
-                            position = this.private.calculatPositions(unitsAdded, x, y);
+                            position = this.private.calculatePositions(unitsAdded, x, y);
                             unit = unitNode.getValue();
                             this.public.getPosition(position.x, position.y).setGameObject(unit);
                             unitsAdded++;
@@ -60,9 +60,9 @@
                         var playerTwo = playerList.getLast();
                         var unitsOne = playerOne.getValue().getUnits();
                         var unitsTwo = playerTwo.getValue().getUnits();
-                        this.private.createNewUnits(unitsOne);
+                        this.private.createNewUnits(playerOne.getValue(), unitsOne);
                         this.private.positionUnits(unitsOne, 2, 5);
-                        this.private.createNewUnits(unitsTwo);
+                        this.private.createNewUnits(playerTwo.getValue(), unitsTwo);
                         this.private.positionUnits(unitsTwo, 17, 5);
                     }
                 };
@@ -71,6 +71,8 @@
                     this.super.constructor(20, 10);
                     this.protected.initializePlayers();
                     this.protected.endTurn(this.public.getPlayers().getLast().getValue());
+                    this.protected.endTurn(this.public.getPlayers().getLast().getValue());
+                    this.protected.startTurn(this.public.getPlayers().getFirst().getValue());
                 };
             });
         }]);

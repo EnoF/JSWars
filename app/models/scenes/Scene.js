@@ -61,6 +61,7 @@
                 },
                 endTurn: function endTurn(player) {
                     var units = player.getUnits();
+                    player.setAllowedToPerformActions(false);
                     for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
                         unit.getValue().setActive(false);
                     }
@@ -71,6 +72,7 @@
                 },
                 startTurn: function startTurn(player) {
                     var units = player.getUnits();
+                    player.setAllowedToPerformActions(true);
                     for (var unit = units.getFirst(); unit; unit = unit.getNext()) {
                         unit.getValue().setHasAttacked(false);
                         unit.getValue().setHasMoved(false);
@@ -136,16 +138,8 @@
             };
 
             this.public = {
-                action: function action(x, y) {
-                    var square = this.private.activeGameSquare;
-                    if (!this.public.hasActionPanelOpen() ||
-                        (square.getX() === x && square.getY() === y)) {
-                        this.public.openActionPanel(x, y);
-                    } else if (this.public.isInMoveMode() &&
-                        this.protected.isInMoveRange(x, y)) {
-                        this.public.move(x, y);
-                    } else if (this.public.isInAttackMode() &&
-                        this.protected.isInAttackRange(x, y)) {
+                attack: function attack(x, y) {
+                    if (this.public.isInAttackRange(x, y)) {
                         this.protected.attack(x, y);
                     } else {
                         this.public.closeActionPanel();
@@ -186,6 +180,14 @@
                         }
                     }
                     return null;
+                },
+                isCurrentSquare: function isCurrentSquare(x, y) {
+                    var square = this.private.activeGameSquare;
+                    if (square !== null) {
+                        return square.getX() === x && square.getY() === y;
+                    } else {
+                        return false;
+                    }
                 },
                 isEndingTurn: function isEndingTurn() {
                     return this.private.isEndingTurn;

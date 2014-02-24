@@ -17,6 +17,9 @@
                 },
                 units: {
                     get: new LinkedHashMap()
+                },
+                allowedToPerformActions: {
+                    isSet: false
                 }
             };
 

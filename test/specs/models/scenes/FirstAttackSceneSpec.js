@@ -50,12 +50,12 @@
             function attackPosition(x, y, hp, skill) {
                 var scene = new FirstAttackSceneModel(3, 3, x, y);
                 var enemyTarget = scene.getPosition(x, y).getGameObject();
-                scene.action(3, 3);
+                scene.openActionPanel(3, 3);
                 var square = scene.getActiveGameSquare();
                 square.startSelectingAttack();
                 square.startAttackMode();
                 square.selectSkill(skill);
-                scene.action(x, y);
+                scene.attack(x, y);
                 expect(enemyTarget.getHp()).toEqual(hp);
                 expect(scene.isInAttackMode()).toEqual(false);
                 expect(scene.getPosition(3, 3).isOpened()).toEqual(false);
@@ -82,24 +82,24 @@
 
         it('should not do any dmg calculation when attacking an unoccupied square', function unOccupied() {
             var scene = new FirstAttackSceneModel(3, 3, 6, 3);
-            scene.action(3, 3);
+            scene.openActionPanel(3, 3);
             var square = scene.getActiveGameSquare();
             square.startSelectingAttack();
             square.startAttackMode();
             square.selectSkill(1);
             expect(function testIfErrorIsThrown() {
-                scene.action(3, 2);
+                scene.attack(3, 2);
             }).not.toThrow();
         });
 
         whereIt('should mark the character as has attacked', function markAttacked(x, y, result) {
             var scene = new FirstAttackSceneModel(3, 3, 4, 3);
-            scene.action(3, 3);
+            scene.openActionPanel(3, 3);
             var square = scene.getActiveGameSquare();
             square.startSelectingAttack();
             square.startAttackMode();
             square.selectSkill(0);
-            scene.action(x, y);
+            scene.attack(x, y);
             expect(square.getGameObject().hasAttacked()).toEqual(result);
         }, [
             {
@@ -121,13 +121,13 @@
 
         it('should not allow a player to attack again when already attacked', function preventAttack() {
             var scene = new FirstAttackSceneModel(3, 3, 4, 3);
-            scene.action(3, 3);
+            scene.openActionPanel(3, 3);
             var square = scene.getActiveGameSquare();
             square.startSelectingAttack();
             square.startAttackMode();
             square.selectSkill(0);
-            scene.action(4, 3);
-            scene.action(3, 3);
+            scene.attack(4, 3);
+            scene.openActionPanel(3, 3);
             square.startSelectingAttack();
             expect(square.isSelectingAttack()).toEqual(false);
             expect(square.hasAttacked()).toEqual(true);
@@ -186,18 +186,18 @@
         }
 
         function whenStartingMoveMode() {
-            scene.action(3, 3);
+            scene.openActionPanel(3, 3);
             square = scene.getActiveGameSquare();
             square.resolveAction('move');
         }
 
         function whenMovingAwayFromTheEnemyAndOpenMenu() {
-            scene.action(2, 3);
-            scene.action(2, 3);
+            scene.move(2, 3);
+            scene.openActionPanel(2, 3);
         }
 
         function whenOpeningActionMenu() {
-            scene.action(3, 3);
+            scene.openActionPanel(3, 3);
         }
 
         function whenCancelingActionMenu() {
@@ -206,7 +206,7 @@
         }
 
         function whenOpeningEnemyActionMenu() {
-            scene.action(4, 3);
+            scene.openActionPanel(4, 3);
         }
 
         function whenAttackingWithFirstSkill() {
@@ -214,7 +214,7 @@
             square.startSelectingAttack();
             square.startAttackMode();
             square.selectSkill(0);
-            scene.action(4, 3);
+            scene.attack(4, 3);
         }
 
         function whenAttackingWithSecondSkill() {
@@ -222,7 +222,7 @@
             square.startSelectingAttack();
             square.startAttackMode();
             square.selectSkill(1);
-            scene.action(4, 3);
+            scene.attack(4, 3);
         }
 
         function whenEndingTheTurn() {
