@@ -19,8 +19,7 @@
             $scope.isInAttackMode = scene.isInAttackMode;
 
             $scope.action = function action(x, y) {
-                if (!scene.hasActionPanelOpen() ||
-                    scene.isCurrentSquare(x, y)) {
+                if (!scene.hasActionPanelOpen()) {
                     scene.openActionPanel(x, y);
                 } else if (scene.isInMoveRange(x, y)) {
                     scene.move(x, y);

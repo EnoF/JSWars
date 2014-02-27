@@ -6,7 +6,7 @@
 (function FirstAttackSceneSpec(whereIt) {
     'use strict';
 
-    describe('GameSquare Model', function gameSquareModelSpec() {
+    describe('First Attack Scene Model', function gameSquareModelSpec() {
 
         var SaberModel;
         var SwordSoldierModel;

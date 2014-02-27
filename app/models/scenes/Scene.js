@@ -90,16 +90,8 @@
                     this.private.currentPlayerNode = this.private.players.getFirst();
                     this.protected.addUnits();
                 },
-                validatePositions: function validatePositions(newX, newY) {
-                    var currentPosition = this.private.activeGameSquare;
-                    var newPosition = this.public.getPosition(newX, newY);
-                    return currentPosition.isOccupied() && !newPosition.isOccupied();
-                },
                 isInMoveRange: function isInMoveRange(newX, newY) {
                     var square = this.private.activeGameSquare;
-                    if (square === null || !square.isOccupied()) {
-                        return false;
-                    }
                     var character = square.getGameObject();
                     var travel = this.private.getDistance(square.getX(), newX) +
                         this.private.getDistance(square.getY(), newY);
@@ -107,9 +99,6 @@
                 },
                 isInAttackRange: function isInAttackRange(newX, newY) {
                     var square = this.private.activeGameSquare;
-                    if (square === null || square.getSelectedSkill() === null) {
-                        return false;
-                    }
                     var travel = this.private.getDistance(square.getX(), newX) +
                         this.private.getDistance(square.getY(), newY);
                     return travel <= square.getSelectedSkill().getRange();
@@ -181,37 +170,18 @@
                     }
                     return null;
                 },
-                isCurrentSquare: function isCurrentSquare(x, y) {
-                    var square = this.private.activeGameSquare;
-                    if (square !== null) {
-                        return square.getX() === x && square.getY() === y;
-                    } else {
-                        return false;
-                    }
-                },
                 isEndingTurn: function isEndingTurn() {
                     return this.private.isEndingTurn;
                 },
                 openActionPanel: function openActionPanel(x, y) {
                     var activeSquare = this.public.getPosition(x, y);
-                    if (activeSquare !== null) {
-                        this.protected.setActiveGameSquare(activeSquare);
-                        return activeSquare.getActionList();
-                    }
-                    return [];
+                    this.protected.setActiveGameSquare(activeSquare);
+                    return activeSquare.getActionList();
                 },
                 closeActionPanel: function closeActionPanel() {
                     var activeSquare = this.private.activeGameSquare;
                     activeSquare.closeActionPanel();
                     this.private.activeGameSquare = null;
-                },
-                spawnCharacter: function spawnCharacter(character, x, y) {
-                    var square = this.public.getPosition(x, y);
-                    if (square !== null && !square.isOccupied()) {
-                        square.setGameObject(character);
-                        return true;
-                    }
-                    return false;
                 },
                 isInMoveRange: function isInMoveRange(newX, newY) {
                     if (!this.public.isInMoveMode()) {
@@ -250,10 +220,8 @@
                     var currentPosition = this.private.activeGameSquare;
                     var newPosition = this.public.getPosition(newX, newY);
                     var character = currentPosition.getGameObject();
-                    if (this.protected.validatePositions(newX, newY)) {
-                        currentPosition.setGameObject(null);
-                        newPosition.setGameObject(character);
-                    }
+                    currentPosition.setGameObject(null);
+                    newPosition.setGameObject(character);
                     character.setHasMoved(true);
                     this.public.closeActionPanel();
                 }

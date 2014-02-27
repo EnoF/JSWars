@@ -42,9 +42,62 @@
             expectPlayerTwoTurn();
         });
 
+        it('should be able to attack enemy with clean cut', function move() {
+            givenMoveModeIsStarted();
+            whenMovingNextToEnemy();
+            whenAttackingTheEnemyWithCleanCut();
+            expectPlayerOneToHaveWon();
+        });
+
+        it('should close the action panel when action panel is open', function closePanel() {
+            givenMoveModeIsStarted();
+            whenClickingOutOfRange();
+            expectActionPanelToBeClosed();
+        });
+
+        it('should be able to let player two win', function playerTwoWin() {
+            givenMoveModeIsStarted();
+            whenMovingNextToEnemy();
+            whenEndingTurn();
+            whenAttackingSaber();
+            whenEndingTurn();
+            whenEndingTurn();
+            whenAttackingSaber();
+            whenEndingTurn();
+            whenEndingTurn();
+            whenAttackingSaber();
+            expectPlayerTwoToHaveWon();
+        });
+
+        function givenMoveModeIsStarted() {
+            var square = scope.map[3][2];
+            scope.action(3, 2);
+            square.startMoveMode();
+        }
+
+        function whenMovingNextToEnemy() {
+            scope.action(4, 2);
+        }
+
+        function whenAttackingSaber() {
+            var square = scope.map[5][2];
+            scope.action(5, 2);
+            square.startSelectingAttack();
+            square.selectSkill(0);
+            scope.action(4, 2);
+        }
+
         function whenEndingTurn() {
             scope.endTurn();
             jasmine.Clock.tick(1500);
+        }
+
+        function whenAttackingTheEnemyWithCleanCut() {
+            var square = scope.map[4][2];
+            scope.action(4, 2);
+            square.startSelectingAttack();
+            square.selectSkill(0);
+            scope.action(5, 2);
         }
 
         function whenAttackingTheEnemyWithExcalibur() {
@@ -53,7 +106,10 @@
             square.startSelectingAttack();
             square.selectSkill(1);
             scope.action(5, 2);
+        }
 
+        function whenClickingOutOfRange() {
+            scope.action(0, 0);
         }
 
         function expectEnemyDmg() {
@@ -65,6 +121,20 @@
 
         function expectPlayerTwoTurn() {
             expect(scope.getCurrentPlayer().getName()).toEqual('Player 2');
+        }
+
+        function expectPlayerOneToHaveWon() {
+            jasmine.Clock.tick(1500);
+            expect(scope.getWinner().getName()).toEqual('Player 1');
+        }
+
+        function expectPlayerTwoToHaveWon() {
+            jasmine.Clock.tick(1500);
+            expect(scope.getWinner().getName()).toEqual('Player 2');
+        }
+
+        function expectActionPanelToBeClosed() {
+            expect(scope.map[3][2].isOpened()).toEqual(false);
         }
     });
 }(window.whereIt));

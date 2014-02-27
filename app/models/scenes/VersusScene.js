@@ -15,7 +15,7 @@
 
                 this.private = {
                     createNewUnits: function createNewUnits(player, list) {
-                        list.add(0, new Saber());
+                        list.add(0, new Saber(0, player));
                         for (var i = 1; i < 5; i++) {
                             list.add(i, new SwordSoldier(i, player));
                         }
