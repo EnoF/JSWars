@@ -56,8 +56,50 @@
                 expect(scope.canPerformActions()).toEqual(true);
             });
 
+            it('should not allow the player to move twice in a turn', function moveTwice() {
+                givenCharacterHasMoved();
+                scope.startMoveMode();
+                expect(scope.gameSquare.isInMoveMode()).toEqual(false);
+            });
+
+            it('should not allow the player to attack twice in a turn', function selectAttack() {
+                givenCharacterHasAttacked();
+                scope.startSelectingAttack();
+                expect(scope.gameSquare.isInAttackMode()).toEqual(false);
+            });
+
+            whereIt('should disable the options when the character has already used it',
+                function disable(action, result) {
+                    givenCharacterHasAttacked();
+                    givenCharacterHasMoved()
+                    expect(scope.shouldDisable(action)).toEqual(result);
+                }, [
+                    {
+                        action: 'attack',
+                        result: true
+                    },
+                    {
+                        action: 'move',
+                        result: true
+                    },
+                    {
+                        action: 'cancel',
+                        result: false
+                    }
+                ]);
+
             function givenPlayerIsAtTurn() {
                 spyOn(player, 'isAllowedToPerformActions').andReturn(true);
+            }
+
+            function givenCharacterHasMoved() {
+                spyOn(saber, 'hasMoved').andReturn(true);
+            }
+
+            function givenCharacterHasAttacked() {
+                scope.gameSquare.startAttackMode();
+                scope.gameSquare.stopAttackMode();
+                spyOn(saber, 'hasAttacked').andReturn(true);
             }
         });
     });

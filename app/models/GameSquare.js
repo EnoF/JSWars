@@ -22,16 +22,22 @@
                     getSet: null
                 },
                 isOpened: false,
-                isSelectingAttack: false,
-                inMoveMode: false,
-                inAttackMode: false,
+                selectingAttack: {
+                    is: false
+                },
+                inMoveMode: {
+                    is: false
+                },
+                inAttackMode: {
+                    is: false
+                },
                 selectedSkill: {
                     get: null
                 },
                 getAttackList: function getAttackList() {
                     var list = [];
                     var gameObject = this.private.gameObject;
-                    if (!this.private.isSelectingAttack) {
+                    if (!this.private.selectingAttack) {
                         return list;
                     }
                     if (gameObject.hasMoves()) {
@@ -85,15 +91,6 @@
                     }
                     return false;
                 },
-                isSelectingAttack: function isSelectingAttack() {
-                    return this.private.isSelectingAttack;
-                },
-                isInMoveMode: function isInMoveMode() {
-                    return this.private.inMoveMode;
-                },
-                isInAttackMode: function isInAttackMode() {
-                    return this.private.inAttackMode;
-                },
                 openActionPanel: function openActionPanel() {
                     this.private.isOpened = true;
                 },
@@ -123,13 +120,13 @@
                 startSelectingAttack: function startSelectingAttack() {
                     var gameObject = this.private.gameObject;
                     if (gameObject instanceof Character && !gameObject.hasAttacked()) {
-                        this.private.isSelectingAttack = true;
+                        this.private.selectingAttack = true;
                     } else {
-                        this.private.isSelectingAttack = false;
+                        this.private.selectingAttack = false;
                     }
                 },
                 stopSelectingAttack: function stopSelectingAttack() {
-                    this.private.isSelectingAttack = false;
+                    this.private.selectingAttack = false;
                 },
                 getAttackList: function getAttackList() {
                     return this.private.getAttackList();
@@ -137,15 +134,7 @@
                 selectSkill: function selectSkill(skillIndex) {
                     this.private.selectedSkill = this.private.getAttackList()[skillIndex] || null;
                     this.private.inAttackMode = true;
-                    this.private.isSelectingAttack = false;
-                },
-                shouldDisable: function shouldDisable(action) {
-                    if (action === 'attack') {
-                        return this.public.hasAttacked();
-                    } else if (action === 'move') {
-                        return this.public.hasMoved();
-                    }
-                    return false;
+                    this.private.selectingAttack = false;
                 }
             };
 

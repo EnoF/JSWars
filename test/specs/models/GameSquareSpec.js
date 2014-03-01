@@ -107,26 +107,5 @@
             expect(square.hasAttacked()).toEqual(false);
             expect(square.hasMoved()).toEqual(false);
         });
-
-        whereIt('should disable the options when the character has already used it',
-            function disable(action, result) {
-                var square = new GameSquareModel(0, 0, new CharacterModel());
-                square.getGameObject().setHasAttacked(true);
-                square.getGameObject().setHasMoved(true);
-                expect(square.shouldDisable(action)).toEqual(result);
-            }, [
-                {
-                    action: 'attack',
-                    result: true
-                },
-                {
-                    action: 'move',
-                    result: true
-                },
-                {
-                    action: 'cancel',
-                    result: false
-                }
-            ]);
     });
 }(window.whereIt));

@@ -30,7 +30,14 @@
 
             $scope.hasAttacked = square.hasAttacked;
 
-            $scope.shouldDisable = square.shouldDisable;
+            $scope.shouldDisable = function shouldDisable(action) {
+                if (action === 'attack') {
+                    return square.hasAttacked();
+                } else if (action === 'move') {
+                    return square.hasMoved();
+                }
+                return false;
+            };
 
             $scope.canAttack = square.canAttack;
 

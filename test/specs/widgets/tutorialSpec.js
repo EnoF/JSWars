@@ -69,14 +69,31 @@
             expectPlayerTwoToHaveWon();
         });
 
+        it('should cancel the attack when targeting an open place', function cancelAttack() {
+            givenStartingAnAttackWithCleanCut();
+            whenTargetingOpenSquare();
+            expect(scope.isInAttackMode()).toEqual(false);
+        });
+
         function givenMoveModeIsStarted() {
             var square = scope.map[3][2];
             scope.action(3, 2);
             square.startMoveMode();
         }
 
+        function givenStartingAnAttackWithCleanCut() {
+            var square = scope.map[3][2];
+            scope.action(3, 2);
+            square.startSelectingAttack();
+            square.selectSkill(0);
+        }
+
         function whenMovingNextToEnemy() {
             scope.action(4, 2);
+        }
+
+        function whenTargetingOpenSquare() {
+            scope.action(0, 0);
         }
 
         function whenAttackingSaber() {
