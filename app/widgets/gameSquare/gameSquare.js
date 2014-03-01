@@ -24,7 +24,9 @@
 
             $scope.getAttackList = square.getAttackList;
 
-            $scope.resolveAction = square.resolveAction;
+            $scope.startMoveMode = square.startMoveMode;
+            $scope.startSelectingAttack = square.startSelectingAttack;
+            $scope.closeActionPanel = square.closeActionPanel;
 
             $scope.selectSkill = square.selectSkill;
 

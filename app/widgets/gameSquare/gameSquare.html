@@ -7,15 +7,15 @@
     <ul class="action-menu"
         data-ng-click="stopPropagation($event)"
         data-ng-show="isOpened() && !isSelectingAttack()">
-        <li data-ng-click="resolveAction('move')"
+        <li data-ng-click="startMoveMode()"
             data-ng-show="canMove() && canPerformActions()"
             data-ng-class="{ 'disabled': shouldDisable('move') }">move
         </li>
-        <li data-ng-click="resolveAction('attack')"
+        <li data-ng-click="startSelectingAttack()"
             data-ng-show="canAttack() && canPerformActions()"
             data-ng-class="{ 'disabled': shouldDisable('attack') }">attack
         </li>
-        <li data-ng-click="resolveAction('cancel')">cancel</li>
+        <li data-ng-click="closeActionPanel()">cancel</li>
     </ul>
     <ul class="attack-list"
         data-ng-show="isSelectingAttack()"
@@ -24,6 +24,6 @@
             data-ng-click="selectSkill($index)">
             {{ attack.getName() }}
         </li>
-        <li data-ng-click="resolveAction('cancel')">cancel</li>
+        <li data-ng-click="closeActionPanel()">cancel</li>
     </ul>
 </section>

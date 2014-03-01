@@ -123,7 +123,7 @@
             var square = new GameSquareModel();
             square.openActionPanel();
             square.startAttackMode();
-            square.resolveAction('cancel');
+            square.closeActionPanel();
             expect(square.isOpened()).toEqual(false);
             expect(square.isInAttackMode()).toEqual(false);
         });

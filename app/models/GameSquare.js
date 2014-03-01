@@ -158,15 +158,6 @@
                     this.private.inAttackMode = true;
                     this.private.isSelectingAttack = false;
                 },
-                resolveAction: function resolveAction(action) {
-                    if (action === 'move') {
-                        this.public.startMoveMode();
-                    } else if (action === 'attack') {
-                        this.public.startSelectingAttack();
-                    } else {
-                        this.public.closeActionPanel();
-                    }
-                },
                 shouldDisable: function shouldDisable(action) {
                     if (action === 'attack') {
                         return this.public.hasAttacked();

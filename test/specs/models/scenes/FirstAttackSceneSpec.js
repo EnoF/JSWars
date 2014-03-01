@@ -188,7 +188,7 @@
         function whenStartingMoveMode() {
             scene.openActionPanel(3, 3);
             square = scene.getActiveGameSquare();
-            square.resolveAction('move');
+            square.startMoveMode();
         }
 
         function whenMovingAwayFromTheEnemyAndOpenMenu() {
@@ -241,7 +241,7 @@
 
         function whenMovingAgain() {
             square = scene.getActiveGameSquare();
-            square.resolveAction('move');
+            square.startMoveMode();
         }
 
         function expectCurrentPlayerToBePlayerOne() {
