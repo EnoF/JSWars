@@ -12,7 +12,9 @@
         return clazz(function GameObject() {
 
             this.private = {
-                isActive: true
+                active: {
+                    isSet: true
+                }
             };
 
             this.protected = {
@@ -49,20 +51,8 @@
                 getHpPercentage: function getHpPercentage() {
                     return this.public.getHp() / this.public.getMaxHp() * 100;
                 },
-                canMove: function canMove() {
-                    return false;
-                },
-                canAttack: function canAttack() {
-                    return false;
-                },
                 hasMoves: function hasMoves() {
                     return this.protected.moves.length > 0;
-                },
-                isActive: function isActive() {
-                    return this.private.isActive;
-                },
-                setActive: function setActive(active) {
-                    this.private.isActive = active;
                 }
             };
 

@@ -20,8 +20,6 @@
 
             $scope.isSelectingAttack = square.isSelectingAttack;
 
-            $scope.getActionList = square.getActionList;
-
             $scope.getAttackList = square.getAttackList;
 
             $scope.startMoveMode = square.startMoveMode;

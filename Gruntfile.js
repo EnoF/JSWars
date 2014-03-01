@@ -51,11 +51,11 @@ module.exports = function (grunt) {
                     'test/**/*Spec.js',
                     'test/e2e/*.js'
                 ],
-                tasks: ['karma:unitAuto:run', 'karma:e2eAuto:run']
+                tasks: ['karma:unitAuto:run', 'karma:middleAuto:run', 'karma:e2eAuto:run']
             },
             ngTemplates: {
                 files: ['<%= yeoman.app %>/widgets/**/*.html'],
-                tasks: ['ngtemplates']
+                tasks: ['ngtemplates', 'karma:middleAuto:run', 'karma:e2eAuto:run']
             },
             less: {
                 files: ['<%= yeoman.app %>/styles/*.less'],
@@ -336,6 +336,14 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 background: true
             },
+            middle: {
+                configFile: 'middle-karma.conf.js',
+                singleRun: true
+            },
+            middleAuto: {
+                configFile: 'middle-karma.conf.js',
+                background: true
+            },
             e2e: {
                 configFile: 'e2e-karma.conf.js',
                 singleRun: true
@@ -431,6 +439,7 @@ module.exports = function (grunt) {
             'connect:livereload',
             'open',
             'karma:unitAuto',
+            'karma:middleAuto',
             'karma:e2eAuto',
             'watch'
         ]);

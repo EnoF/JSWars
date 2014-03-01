@@ -31,6 +31,8 @@
 
             it('should not allow a player to perform actions', function preventPerformActions() {
                 expect(scope.canPerformActions()).toEqual(false);
+                expect(scope.canAttack()).toEqual(false);
+                expect(scope.canMove()).toEqual(false);
             });
         });
 

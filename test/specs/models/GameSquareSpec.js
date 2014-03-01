@@ -25,10 +25,12 @@
         whereIt('should be able to create a game square', function createGameSquare(getGameObject, isOccupied) {
             var gameSquare = new GameSquareModel(0, 0, getGameObject());
             expect(gameSquare.isOccupied()).toEqual(isOccupied);
+            expect(gameSquare.canAttack()).toEqual(isOccupied);
+            expect(gameSquare.canMove()).toEqual(isOccupied);
         }, [
             {
                 getGameObject: function getGameObject() {
-                    return new GameObjectModel();
+                    return new SaberModel();
                 },
                 isOccupied: true
             },
@@ -37,41 +39,6 @@
                     return null;
                 },
                 isOccupied: false
-            }
-        ]);
-
-        whereIt('should open the action panel', function openActionPanel(getGameObject, isOpen, result) {
-            var gameSquare = new GameSquareModel(0, 0, getGameObject());
-            if (isOpen) gameSquare.openActionPanel();
-            expect(gameSquare.getActionList()).toEqual(result);
-        }, [
-            {
-                getGameObject: function getGameObject() {
-                    return new SaberModel(0, 0, 0, 0, 0);
-                },
-                isOpen: true,
-                result: ['move', 'attack']
-            },
-            {
-                getGameObject: function getGameObject() {
-                    return new SaberModel(0, 0, 0, 0, 0);
-                },
-                result: [],
-                isOpen: false
-            },
-            {
-                getGameObject: function getGameObject() {
-                    return new GameObjectModel();
-                },
-                result: [],
-                isOpen: true
-            },
-            {
-                getGameObject: function getGameObject() {
-                    return null;
-                },
-                result: [],
-                isOpen: false
             }
         ]);
 

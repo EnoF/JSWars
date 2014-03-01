@@ -25,6 +25,8 @@
                 expect(character.getMobility()).toEqual(mobility);
                 expect(character.getSizeX()).toEqual(sizeX);
                 expect(character.getSizeY()).toEqual(sizeY);
+                expect(character.canAttack()).toEqual(true);
+                expect(character.canMove()).toEqual(true);
             }, [
                 {
                     hp: 100,

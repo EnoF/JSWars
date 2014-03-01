@@ -23,6 +23,8 @@
                 expect(gameObject.getDefence()).toEqual(defence);
                 expect(gameObject.getSizeX()).toEqual(sizeX);
                 expect(gameObject.getSizeY()).toEqual(sizeY);
+                expect(gameObject.getHpPercentage()).toEqual(100);
+                expect(gameObject.isActive()).toEqual(true);
             }, [
                 {
                     hp: 100,
@@ -37,11 +39,5 @@
                     sizeY: 5
                 }
             ]);
-
-        it('should not be able to attack or move', function checkAttackAndMovement() {
-            var gameObject = new GameObjectModel();
-            expect(gameObject.canMove()).toEqual(false);
-            expect(gameObject.canAttack()).toEqual(false);
-        });
     });
 }(window.whereIt));

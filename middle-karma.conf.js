@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2014.
+ *
+ * @author Andy Tang
+ */
+
 // Karma configuration
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 
@@ -18,15 +24,16 @@ module.exports = function (config) {
             'app/bower_components/enofjs/src/*.js',
             'app/models/*.js',
             'app/models/**/*.js',
-            'test/specs/models/*.js',
-            'test/specs/models/**/*.js'
+            'app/widgets/**/*.js',
+            '.tmp/scripts/templates.js',
+            'test/specs/widgets/*.js'
         ],
 
         // list of files / patterns to exclude
         exclude: [],
 
         // web server port
-        port: 8080,
+        port: 9090,
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
@@ -54,13 +61,14 @@ module.exports = function (config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            'app/models/**/*.js': ['coverage']
+            'app/models/**/*.js': ['coverage'],
+            'app/widgets/**/*.js': ['coverage']
         },
 
         // optionally, configure the reporter
         coverageReporter: {
             type: 'html',
-            dir: 'coverage/'
+            dir: 'coverageMiddle/'
         },
 
 

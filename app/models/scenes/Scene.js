@@ -176,7 +176,7 @@
                 openActionPanel: function openActionPanel(x, y) {
                     var activeSquare = this.public.getPosition(x, y);
                     this.protected.setActiveGameSquare(activeSquare);
-                    return activeSquare.getActionList();
+                    return activeSquare.openActionPanel();
                 },
                 closeActionPanel: function closeActionPanel() {
                     var activeSquare = this.private.activeGameSquare;

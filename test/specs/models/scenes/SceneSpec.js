@@ -47,22 +47,6 @@
             }
         ]);
 
-        whereIt('should be able to open an actionpanel', function openActionPanel(x, y, actions) {
-            scene.getPosition(5, 5).setGameObject(new CharacterModel());
-            scene.getPosition(3, 3).setGameObject(new GameObjectModel());
-            expect(scene.openActionPanel(x, y)).toEqual(actions);
-        }, [
-            {
-                x: 5, y: 5, actions: ['move', 'attack']
-            },
-            {
-                x: 3, y: 3, actions: []
-            },
-            {
-                x: 1, y: 5, actions: []
-            }
-        ]);
-
         it('should throw an error when a scene is extended without implementing addUnits', function addUnits() {
             var BrokenScene = clazz(function BrokenScene() {
                 this.extend = 'Scene';

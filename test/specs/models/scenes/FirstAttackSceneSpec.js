@@ -133,6 +133,52 @@
             expect(square.hasAttacked()).toEqual(true);
         });
 
+        it('should return the action panel status', function open() {
+            givenPlayerSpanwedNextToEnemy();
+            expect(scene.hasActionPanelOpen()).toEqual(false);
+            whenOpeningActionMenu();
+            expect(scene.hasActionPanelOpen()).toEqual(true);
+            whenCancelingActionMenu();
+            expect(scene.hasActionPanelOpen()).toEqual(false);
+        });
+
+        whereIt('should return if a square is in attack range', function isInAttackRange(x, y, inAttackRange) {
+            givenPlayerSpanwedNextToEnemy();
+            expect(scene.isInAttackRange(x, y)).toEqual(false);
+            whenOpeningActionMenu();
+            whenStartingAttackingWithExcalibur();
+            expect(scene.isInAttackRange(x, y)).toEqual(inAttackRange);
+        }, [
+            {
+                x: 4,
+                y: 3,
+                inAttackRange: true
+            },
+            {
+                x: 0,
+                y: 0,
+                inAttackRange: false
+            }
+        ]);
+
+        whereIt('should return if a square is in move range', function isInMoveRange(x, y, inMoveRange) {
+            givenPlayerSpanwedNextToEnemy();
+            expect(scene.isInMoveRange(x, y)).toEqual(false);
+            whenStartingMoveMode();
+            expect(scene.isInMoveRange(x, y)).toEqual(inMoveRange);
+        }, [
+            {
+                x: 3,
+                y: 3,
+                inMoveRange: true
+            },
+            {
+                x: 0,
+                y: 0,
+                inMoveRange: false
+            }
+        ]);
+
         it('should not allow a player to move again when moved', function preventMove() {
             givenPlayerSpanwedNextToEnemy();
 
@@ -174,11 +220,25 @@
         it('should remove a character when killed', function removeCharacter() {
             givenPlayerSpanwedNextToEnemy();
             expect(scene.hasGameEnded()).toEqual(false);
+            expect(scene.getWinner()).toEqual(null);
             whenOpeningActionMenu();
             whenAttackingWithFirstSkill();
 
             expectEnemyToBeDead();
             expectPlayerOneToHaveWon();
+        });
+
+        it('should be able to win as player two', function playerTwoWins() {
+            givenPlayerSpanwedNextToEnemy();
+            whenEndingTheTurn();
+            whenEnemyAttacksSaber();
+            whenEnemyIsEndingTheTurn();
+            whenEndingTheTurn();
+            whenEnemyAttacksSaber();
+            whenEnemyIsEndingTheTurn();
+            whenEndingTheTurn();
+            whenEnemyAttacksSaber();
+            expectPlayerOneToBeDead();
         });
 
         function givenPlayerSpanwedNextToEnemy() {
@@ -189,6 +249,13 @@
             scene.openActionPanel(3, 3);
             square = scene.getActiveGameSquare();
             square.startMoveMode();
+        }
+
+        function whenStartingAttackingWithExcalibur() {
+            var square = scene.getActiveGameSquare();
+            square.startSelectingAttack();
+            square.startAttackMode();
+            square.selectSkill(1);
         }
 
         function whenMovingAwayFromTheEnemyAndOpenMenu() {
@@ -223,6 +290,14 @@
             square.startAttackMode();
             square.selectSkill(1);
             scene.attack(4, 3);
+        }
+
+        function whenEnemyAttacksSaber() {
+            scene.openActionPanel(4, 3);
+            var square = scene.getActiveGameSquare();
+            square.startSelectingAttack();
+            square.selectSkill(0);
+            scene.attack(3, 3);
         }
 
         function whenEndingTheTurn() {
@@ -275,5 +350,10 @@
             expect(scene.getWinner().getName()).toEqual('Player 1');
         }
 
+        function expectPlayerOneToBeDead() {
+            jasmine.Clock.tick(1500);
+            expect(scene.hasGameEnded()).toEqual(true);
+            expect(scene.getWinner().getName()).toEqual('Player 2');
+        }
     });
 }(window.whereIt));
