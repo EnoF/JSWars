@@ -28,21 +28,6 @@
                 selectedSkill: {
                     get: null
                 },
-                getActionList: function getActionList() {
-                    var list = [];
-                    if (this.private.gameObject === null || !this.private.isOpened || !this.
-                        private.gameObject.isActive()) {
-
-                        return list;
-                    }
-                    if (this.private.gameObject.canMove()) {
-                        list.push('move');
-                    }
-                    if (this.private.gameObject.canAttack()) {
-                        list.push('attack');
-                    }
-                    return list;
-                },
                 getAttackList: function getAttackList() {
                     var list = [];
                     var gameObject = this.private.gameObject;
@@ -74,7 +59,7 @@
                 },
                 canAttack: function canAttack() {
                     if (this.public.isOccupied()) {
-                        return this.private.gameObject.canMove();
+                        return this.private.gameObject.canAttack();
                     } else {
                         return false;
                     }
@@ -88,7 +73,7 @@
                 },
                 canMove: function canMove() {
                     if (this.public.isOccupied()) {
-                        return this.private.gameObject.canAttack();
+                        return this.private.gameObject.canMove();
                     } else {
                         return false;
                     }
@@ -111,7 +96,6 @@
                 },
                 openActionPanel: function openActionPanel() {
                     this.private.isOpened = true;
-                    return this.private.getActionList();
                 },
                 closeActionPanel: function closeActionPanel() {
                     this.private.isOpened = false;
@@ -146,9 +130,6 @@
                 },
                 stopSelectingAttack: function stopSelectingAttack() {
                     this.private.isSelectingAttack = false;
-                },
-                getActionList: function getActionList() {
-                    return this.private.getActionList();
                 },
                 getAttackList: function getAttackList() {
                     return this.private.getAttackList();
