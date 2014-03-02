@@ -18,6 +18,7 @@ module.exports = function (config) {
             'app/bower_components/enofjs/src/*.js',
             'app/models/*.js',
             'app/models/**/*.js',
+            'app/viewmodels/*.js',
             'test/specs/models/*.js',
             'test/specs/models/**/*.js'
         ],

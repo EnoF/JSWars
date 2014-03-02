@@ -47,6 +47,7 @@ module.exports = function (grunt) {
             karma: {
                 files: [
                     '<%= yeoman.app %>/models/{,*/}*.js',
+                    '<%= yeoman.app %>/viewmodels/{,*/}*.js',
                     '<%= yeoman.app %>/widgets/**/{,*/}*.js',
                     'test/**/*Spec.js',
                     'test/e2e/*.js'
@@ -372,6 +373,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
                         '<%= yeoman.dist %>/scripts/*.js',
                         '<%= yeoman.dist %>/widgets/**/*.js',
+                        '<%= yeoman.dist %>/viewmodels/*.js',
                         '<%= yeoman.dist %>/models/*.js',
                         '<%= yeoman.dist %>/models/**/*.js'
                     ]
@@ -384,6 +386,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
                         '<%= yeoman.dist %>/scripts/*.js',
                         '<%= yeoman.dist %>/widgets/*.js',
+                        '<%= yeoman.dist %>/viewmodels/*.js',
                         '<%= yeoman.dist %>/models/*.js'
                     ]
                 }

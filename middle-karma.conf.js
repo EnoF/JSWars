@@ -22,6 +22,7 @@ module.exports = function (config) {
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/app.js',
             'app/bower_components/enofjs/src/*.js',
+            'app/viewmodels/*.js',
             'app/models/*.js',
             'app/models/**/*.js',
             'app/widgets/**/*.js',
@@ -62,6 +63,7 @@ module.exports = function (config) {
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
             'app/models/**/*.js': ['coverage'],
+            'app/viewmodels/**/*.js': ['coverage'],
             'app/widgets/**/*.js': ['coverage']
         },
 

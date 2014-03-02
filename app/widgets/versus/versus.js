@@ -8,18 +8,13 @@
 
     var app = angular.module('jsWars');
 
-    app.viewModel('versusViewModel',
-        function versusViewModel($scope, VersusScene) {
-            $scope.scene = new VersusScene();
-        });
-
     app.directive('versus', function versusDirective() {
         return {
             restrict: 'A',
             templateUrl: 'versus',
             scope: {
             },
-            controller: 'versusViewModel'
+            controller: 'VersusViewModel'
         };
     });
 }(window.angular));
